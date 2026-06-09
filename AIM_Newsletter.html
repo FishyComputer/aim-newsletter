@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A.I.M — Newsletter</title>
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --bg3: #1a1a24;
+    --surface: #1e1e2a;
+    --surface2: #252535;
+    --border: rgba(120,120,200,0.15);
+    --border2: rgba(120,120,200,0.3);
+    --accent: #6c63ff;
+    --accent2: #8b84ff;
+    --accent-glow: rgba(108,99,255,0.15);
+    --text: #e8e8f0;
+    --text2: #9090a8;
+    --text3: #5a5a72;
+    --gold: #d4a843;
+    --gold2: #f0c060;
+    --silver: #a0a8b8;
+    --bronze: #c87840;
+    --danger: #e05050;
+    --success: #50c878;
+    --font-display: 'Courier New', monospace;
+    --font-body: 'Georgia', serif;
+    --font-ui: system-ui, -apple-system, sans-serif;
+    --radius: 8px;
+    --radius-lg: 14px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-ui);
+    min-height: 100vh;
+    line-height: 1.6;
+  }
+
+  /* ─── AUTH SCREEN ─── */
+  #auth-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: var(--bg);
+  }
+
+  .auth-box {
+    width: 100%;
+    max-width: 400px;
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: var(--radius-lg);
+    padding: 2.5rem 2rem;
+  }
+
+  .auth-logo { text-align: center; margin-bottom: 2rem; }
+
+  .auth-logo .wordmark {
+    font-family: var(--font-display);
+    font-size: 2.8rem;
+    letter-spacing: 0.3em;
+    color: var(--accent2);
+    display: block;
+  }
+
+  .auth-logo .tagline {
+    font-size: 0.75rem;
+    color: var(--text3);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 0.25rem;
+  }
+
+  .auth-box h2 {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text2);
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .field { margin-bottom: 1rem; }
+
+  .field label {
+    display: block;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 0.4rem;
+  }
+
+  .field input, .field textarea, .field select {
+    width: 100%;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.65rem 0.85rem;
+    color: var(--text);
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+
+  .field input:focus, .field textarea:focus { border-color: var(--accent); }
+  .field textarea { resize: vertical; min-height: 120px; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    border: none;
+    font-family: var(--font-ui);
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+    width: 100%;
+    justify-content: center;
+    padding: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .btn-primary:hover { background: var(--accent2); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text2);
+    border: 1px solid var(--border);
+  }
+
+  .btn-ghost:hover { border-color: var(--border2); color: var(--text); background: var(--surface2); }
+
+  .btn-danger {
+    background: transparent;
+    color: var(--danger);
+    border: 1px solid rgba(224,80,80,0.3);
+  }
+
+  .btn-danger:hover { background: rgba(224,80,80,0.1); }
+
+  .btn-success { background: var(--success); color: #0a1a10; }
+  .btn-success:hover { filter: brightness(1.1); }
+
+  .auth-error {
+    background: rgba(224,80,80,0.12);
+    border: 1px solid rgba(224,80,80,0.3);
+    border-radius: var(--radius);
+    padding: 0.6rem 0.85rem;
+    font-size: 0.83rem;
+    color: #f08080;
+    margin-bottom: 1rem;
+    display: none;
+  }
+
+  .auth-switch {
+    text-align: center;
+    margin-top: 1.2rem;
+    font-size: 0.83rem;
+    color: var(--text3);
+  }
+
+  .auth-switch a { color: var(--accent2); cursor: pointer; text-decoration: none; }
+  .auth-switch a:hover { text-decoration: underline; }
+
+  /* ─── APP SHELL ─── */
+  #app { display: none; min-height: 100vh; flex-direction: column; }
+
+  /* ─── HEADER ─── */
+  header {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-left { display: flex; align-items: center; gap: 2rem; }
+
+  .logo {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    letter-spacing: 0.25em;
+    color: var(--accent2);
+    font-weight: bold;
+  }
+
+  nav { display: flex; gap: 0.25rem; }
+
+  nav button {
+    background: transparent;
+    border: none;
+    color: var(--text2);
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.03em;
+  }
+
+  nav button:hover { color: var(--text); background: var(--surface); }
+  nav button.active { color: var(--accent2); background: var(--accent-glow); }
+
+  .header-right { display: flex; align-items: center; gap: 0.75rem; }
+
+  .user-badge { display: flex; align-items: center; gap: 0.5rem; font-size: 0.83rem; color: var(--text2); }
+
+  .user-avatar {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--accent-glow);
+    border: 1px solid var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem; color: var(--accent2);
+    font-weight: 600; text-transform: uppercase;
+  }
+
+  .admin-crown {
+    font-size: 0.65rem;
+    background: rgba(212,168,67,0.15);
+    border: 1px solid rgba(212,168,67,0.4);
+    color: var(--gold2);
+    padding: 1px 6px;
+    border-radius: 100px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── MAIN ─── */
+  main { flex: 1; max-width: 860px; margin: 0 auto; padding: 2.5rem 1.5rem; width: 100%; }
+
+  /* ─── TABS ─── */
+  .tab { display: none; }
+  .tab.active { display: block; }
+
+  /* ─── TAB HEADER ─── */
+  .tab-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+  }
+
+  .tab-title { font-family: var(--font-display); font-size: 1.4rem; letter-spacing: 0.1em; color: var(--text); }
+  .tab-subtitle { font-size: 0.8rem; color: var(--text3); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 0.2rem; }
+
+  /* ─── COMPOSE ─── */
+  #compose-area {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    margin-bottom: 2rem;
+    display: none;
+  }
+
+  #compose-area.open { display: block; }
+
+  .compose-title {
+    font-size: 1rem; font-weight: 500; color: var(--text2);
+    margin-bottom: 1.25rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+
+  .compose-toolbar {
+    display: flex; gap: 0.4rem; flex-wrap: wrap;
+    padding: 0.5rem 0.75rem;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius) var(--radius) 0 0;
+    border-bottom: none;
+  }
+
+  .toolbar-btn {
+    background: transparent; border: none; color: var(--text2);
+    cursor: pointer; padding: 4px 8px; border-radius: 4px;
+    font-size: 0.8rem; font-weight: 600; font-family: var(--font-ui);
+    transition: all 0.12s;
+  }
+
+  .toolbar-btn:hover { background: var(--surface2); color: var(--text); }
+  .toolbar-sep { width: 1px; background: var(--border); margin: 2px 4px; }
+
+  #editor {
+    width: 100%; min-height: 200px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 0 0 var(--radius) var(--radius);
+    padding: 0.85rem;
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    outline: none; resize: vertical;
+  }
+
+  #editor:focus { border-color: var(--accent); }
+
+  .compose-actions { display: flex; gap: 0.75rem; margin-top: 1rem; justify-content: flex-end; }
+
+  /* ─── NEWSLETTER LIST ─── */
+  .newsletter-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: border-color 0.2s;
+  }
+
+  .newsletter-card:hover { border-color: var(--border2); }
+
+  .nl-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
+  .nl-issue { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+  .nl-date { font-size: 0.75rem; color: var(--text3); }
+  .nl-title { font-family: var(--font-body); font-size: 1.25rem; color: var(--text); margin-bottom: 0.5rem; line-height: 1.35; }
+  .nl-summary { font-size: 0.88rem; color: var(--text2); line-height: 1.6; margin-bottom: 1rem; }
+  .nl-footer { display: flex; align-items: center; justify-content: space-between; }
+  .nl-author { font-size: 0.78rem; color: var(--text3); }
+  .nl-actions { display: flex; gap: 0.5rem; }
+
+  .btn-read {
+    background: transparent;
+    border: 1px solid var(--border2);
+    color: var(--text2);
+    font-size: 0.8rem;
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-family: var(--font-ui);
+    transition: all 0.15s;
+  }
+
+  .btn-read:hover { background: var(--surface2); color: var(--text); }
+
+  /* ─── REACTIONS ─── */
+  .nl-reactions {
+    display: flex; gap: 0.5rem;
+    margin-top: 0.85rem; padding-top: 0.85rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .reaction-btn {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 0.3rem 0.75rem;
+    font-size: 0.82rem; color: var(--text2);
+    cursor: pointer; font-family: var(--font-ui);
+    transition: all 0.15s;
+  }
+
+  .reaction-btn:hover { border-color: var(--border2); color: var(--text); background: var(--surface2); }
+
+  .reaction-btn.active-up { border-color: rgba(80,200,120,0.5); background: rgba(80,200,120,0.1); color: var(--success); }
+  .reaction-btn.active-down { border-color: rgba(224,80,80,0.4); background: rgba(224,80,80,0.08); color: var(--danger); }
+  .reaction-count { font-weight: 600; min-width: 1ch; }
+
+  /* ─── COMMENTS ─── */
+  .nl-comments {
+    margin-top: 0.85rem; padding-top: 0.85rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .comments-toggle {
+    background: transparent; border: none;
+    color: var(--text3); font-size: 0.8rem;
+    cursor: pointer; font-family: var(--font-ui);
+    padding: 0; transition: color 0.15s;
+  }
+
+  .comments-toggle:hover { color: var(--text2); }
+  .comments-panel { margin-top: 0.85rem; }
+
+  .comment-item {
+    padding: 0.65rem 0.9rem;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 0.5rem;
+  }
+
+  .comment-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.25rem; }
+  .comment-author { font-size: 0.78rem; font-weight: 600; color: var(--accent2); letter-spacing: 0.03em; }
+  .comment-date { font-size: 0.72rem; color: var(--text3); }
+  .comment-text { font-size: 0.87rem; color: var(--text2); line-height: 1.55; word-break: break-word; }
+
+  .comment-delete {
+    background: none; border: none; color: var(--text3);
+    cursor: pointer; font-size: 0.75rem; padding: 0 0.2rem;
+    transition: color 0.15s;
+  }
+
+  .comment-delete:hover { color: var(--danger); }
+
+  .comment-input-row { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+
+  .comment-input-row input {
+    flex: 1;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.5rem 0.75rem;
+    color: var(--text);
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  .comment-input-row input:focus { border-color: var(--accent); }
+
+  .comment-input-row button {
+    background: var(--accent); color: #fff;
+    border: none; border-radius: var(--radius);
+    padding: 0.5rem 1rem; font-size: 0.82rem;
+    cursor: pointer; font-family: var(--font-ui);
+    transition: background 0.15s; white-space: nowrap;
+  }
+
+  .comment-input-row button:hover { background: var(--accent2); }
+
+  /* ─── MODAL ─── */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 200;
+    display: none;
+    align-items: center; justify-content: center;
+    padding: 1rem;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: var(--radius-lg);
+    max-width: 680px; width: 100%;
+    max-height: 85vh; overflow-y: auto;
+    padding: 2rem;
+  }
+
+  .modal-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 1.5rem; gap: 1rem; }
+  .modal-issue { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.3rem; }
+  .modal-title { font-family: var(--font-body); font-size: 1.5rem; line-height: 1.3; color: var(--text); }
+  .modal-close { background: transparent; border: none; color: var(--text3); cursor: pointer; font-size: 1.2rem; padding: 0.25rem; flex-shrink: 0; line-height: 1; }
+  .modal-close:hover { color: var(--text); }
+  .modal-meta { font-size: 0.8rem; color: var(--text3); margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+  .modal-body { font-family: var(--font-body); font-size: 0.95rem; line-height: 1.8; color: var(--text2); }
+  .modal-body h2, .modal-body h3 { color: var(--text); margin: 1.2rem 0 0.5rem; font-family: var(--font-ui); }
+  .modal-body p { margin-bottom: 1rem; }
+
+  /* ─── RULES TAB ─── */
+  .rules-container { max-width: 640px; }
+
+  .rule-item { display: flex; gap: 1.25rem; padding: 1.25rem 0; border-bottom: 1px solid var(--border); }
+  .rule-item:last-child { border-bottom: none; }
+  .rule-num { font-family: var(--font-display); font-size: 1.6rem; color: var(--text3); min-width: 2.5rem; line-height: 1.2; }
+  .rule-title { font-size: 1rem; font-weight: 500; color: var(--text); margin-bottom: 0.35rem; }
+  .rule-desc { font-size: 0.87rem; color: var(--text2); line-height: 1.6; }
+
+  .rules-intro {
+    padding: 1.25rem 1.5rem;
+    background: var(--accent-glow);
+    border: 1px solid rgba(108,99,255,0.25);
+    border-radius: var(--radius-lg);
+    margin-bottom: 2rem;
+    font-size: 0.88rem; color: var(--text2); line-height: 1.6;
+  }
+
+  /* ─── RANKS TAB ─── */
+  .ranks-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 2.5rem; }
+
+  .rank-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem; transition: border-color 0.2s; }
+  .rank-card:hover { border-color: var(--border2); }
+
+  .rank-badge { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; padding: 3px 10px; border-radius: 100px; margin-bottom: 0.75rem; }
+  .rank-name { font-size: 1rem; font-weight: 500; color: var(--text); margin-bottom: 0.35rem; }
+  .rank-desc { font-size: 0.82rem; color: var(--text2); line-height: 1.55; }
+  .rank-perks { margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--border); }
+  .perk { font-size: 0.78rem; color: var(--text2); padding: 2px 0; display: flex; align-items: center; gap: 0.4rem; }
+  .perk::before { content: "›"; color: var(--text3); }
+
+  .rank-founder { border-color: rgba(212,168,67,0.35); }
+  .rank-founder .rank-badge { background: rgba(212,168,67,0.12); color: var(--gold2); border: 1px solid rgba(212,168,67,0.3); }
+  .rank-editor { border-color: rgba(108,99,255,0.3); }
+  .rank-editor .rank-badge { background: rgba(108,99,255,0.12); color: var(--accent2); border: 1px solid rgba(108,99,255,0.3); }
+  .rank-senior { border-color: rgba(80,200,120,0.2); }
+  .rank-senior .rank-badge { background: rgba(80,200,120,0.1); color: var(--success); border: 1px solid rgba(80,200,120,0.25); }
+  .rank-member { border-color: var(--border); }
+  .rank-member .rank-badge { background: var(--surface2); color: var(--text2); border: 1px solid var(--border2); }
+
+  /* ─── SETTINGS TAB ─── */
+  .settings-section { margin-bottom: 2rem; }
+
+  .settings-section-title { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-bottom: 0.75rem; font-weight: 600; }
+
+  .settings-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1.25rem 1.5rem; }
+  .settings-row { display: flex; align-items: center; justify-content: space-between; }
+  .settings-label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text3); margin-bottom: 0.2rem; }
+  .settings-value { font-size: 0.95rem; color: var(--text); }
+  .settings-desc { font-size: 0.85rem; color: var(--text2); line-height: 1.6; }
+
+  /* ─── EMPTY STATE ─── */
+  .empty { text-align: center; padding: 4rem 2rem; color: var(--text3); }
+  .empty-icon { font-size: 2.5rem; margin-bottom: 1rem; opacity: 0.4; }
+  .empty-title { font-size: 1rem; color: var(--text2); margin-bottom: 0.5rem; }
+  .empty-sub { font-size: 0.83rem; }
+
+  /* ─── LOADING SPINNER ─── */
+  .loading {
+    text-align: center; padding: 4rem 2rem; color: var(--text3);
+    font-size: 0.9rem; letter-spacing: 0.05em;
+  }
+
+  .spinner {
+    width: 28px; height: 28px;
+    border: 2px solid var(--border2);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.75s linear infinite;
+    margin: 0 auto 1rem;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ─── TOAST ─── */
+  #toast {
+    position: fixed; bottom: 1.5rem; right: 1.5rem;
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: var(--radius);
+    padding: 0.65rem 1rem;
+    font-size: 0.85rem; color: var(--text);
+    z-index: 300; opacity: 0;
+    transform: translateY(8px);
+    transition: all 0.25s;
+    pointer-events: none;
+  }
+
+  #toast.show { opacity: 1; transform: translateY(0); }
+
+  .divider { border: none; border-top: 1px solid var(--border); margin: 1.25rem 0; }
+
+  /* ─── IMPORT SECTION ─── */
+  .import-section { margin-bottom: 1.25rem; }
+
+  .import-label { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); margin-bottom: 0.5rem; }
+
+  .import-drop {
+    display: flex; align-items: center; justify-content: center;
+    text-align: center;
+    padding: 0.9rem 1rem;
+    border: 1px dashed var(--border2);
+    border-radius: var(--radius);
+    cursor: pointer; font-size: 0.83rem; color: var(--text3);
+    transition: all 0.2s; background: var(--bg2); gap: 0.4rem;
+  }
+
+  .import-drop:hover { border-color: var(--accent); color: var(--text2); background: var(--accent-glow); }
+  .import-drop code { color: var(--accent2); font-size: 0.82em; }
+</style>
+</head>
+<body>
+
+<!-- AUTH SCREEN -->
+<div id="auth-screen">
+  <div class="auth-box">
+    <div class="auth-logo">
+      <span class="wordmark">A.I.M</span>
+    </div>
+
+    <div id="login-form">
+      <h2>Sign in to your account</h2>
+      <div id="auth-error" class="auth-error"></div>
+      <div class="field">
+        <label>Username</label>
+        <input type="text" id="login-user" placeholder="Enter username" autocomplete="username">
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="login-pass" placeholder="Enter password" autocomplete="current-password">
+      </div>
+      <button class="btn btn-primary" onclick="doLogin()">Sign In</button>
+      <hr class="divider">
+      <div class="import-section">
+        <div class="import-label">Restore from backup file</div>
+        <label class="import-drop" id="import-drop" for="import-file-input">
+          <span id="import-drop-text">📂 Drop your <code>.aim</code> backup here, or click to browse</span>
+          <input type="file" id="import-file-input" accept=".aim,.json" style="display:none" onchange="handleImportFile(this.files[0])">
+        </label>
+        <div id="import-error" class="auth-error" style="margin-top:0.5rem;margin-bottom:0;"></div>
+      </div>
+      <div class="auth-switch">Don't have an account? <a onclick="showRegister()">Create one</a></div>
+    </div>
+
+    <div id="register-form" style="display:none">
+      <h2>Create an account</h2>
+      <div id="reg-error" class="auth-error"></div>
+      <div class="field">
+        <label>Username</label>
+        <input type="text" id="reg-user" placeholder="Choose a username">
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="reg-pass" placeholder="Choose a password">
+      </div>
+      <div class="field">
+        <label>Confirm Password</label>
+        <input type="password" id="reg-pass2" placeholder="Confirm password">
+      </div>
+      <button class="btn btn-primary" onclick="doRegister()">Create Account</button>
+      <div class="auth-switch">Already have an account? <a onclick="showLogin()">Sign in</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app" style="display:none; flex-direction:column; min-height:100vh;">
+  <header>
+    <div class="header-left">
+      <div class="logo">A.I.M</div>
+      <nav>
+        <button onclick="showTab('newsletters')" id="tab-btn-newsletters" class="active">Newsletters</button>
+        <button onclick="showTab('rules')" id="tab-btn-rules">Rules</button>
+        <button onclick="showTab('ranks')" id="tab-btn-ranks">Ranks</button>
+        <button onclick="showTab('settings')" id="tab-btn-settings">Settings</button>
+      </nav>
+    </div>
+    <div class="header-right">
+      <div class="user-badge">
+        <div class="user-avatar" id="user-avatar-letter">?</div>
+        <span id="header-username"></span>
+        <span class="admin-crown" id="admin-badge" style="display:none">★ admin</span>
+      </div>
+      <button class="btn btn-ghost" style="padding:0.35rem 0.75rem; font-size:0.8rem;" onclick="doLogout()">Sign out</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- NEWSLETTERS TAB -->
+    <div class="tab active" id="tab-newsletters">
+      <div class="tab-header">
+        <div>
+          <div class="tab-title">Newsletters</div>
+          <div class="tab-subtitle">Dispatches from the frontier</div>
+        </div>
+        <button class="btn btn-primary" id="compose-btn" onclick="toggleCompose()" style="display:none; width:auto; padding:0.5rem 1.1rem;">
+          + New Issue
+        </button>
+      </div>
+
+      <!-- Compose Area (admin only) -->
+      <div id="compose-area">
+        <div class="compose-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+          Compose new issue
+        </div>
+        <div class="field">
+          <label>Issue Title</label>
+          <input type="text" id="nl-title" placeholder="e.g. The Week in AI: Models, Mergers & Milestones">
+        </div>
+        <div class="field">
+          <label>Summary (shown in listing)</label>
+          <input type="text" id="nl-summary" placeholder="A brief, punchy summary of this issue">
+        </div>
+        <div class="field">
+          <label>Body Content</label>
+          <div class="compose-toolbar">
+            <button class="toolbar-btn" onclick="fmt('bold')"><b>B</b></button>
+            <button class="toolbar-btn" onclick="fmt('italic')"><i>I</i></button>
+            <button class="toolbar-btn" onclick="fmt('underline')" style="text-decoration:underline">U</button>
+            <div class="toolbar-sep"></div>
+            <button class="toolbar-btn" onclick="fmtBlock('h2')">H2</button>
+            <button class="toolbar-btn" onclick="fmtBlock('h3')">H3</button>
+            <div class="toolbar-sep"></div>
+            <button class="toolbar-btn" onclick="fmt('insertUnorderedList')">• List</button>
+            <button class="toolbar-btn" onclick="fmt('insertOrderedList')">1. List</button>
+            <div class="toolbar-sep"></div>
+            <button class="toolbar-btn" onclick="fmtBlock('blockquote')">" Quote</button>
+            <div class="toolbar-sep"></div>
+            <button class="toolbar-btn" onclick="fmt('removeFormat')" style="font-size:0.7rem">✕ Clear</button>
+          </div>
+          <div id="editor" contenteditable="true" spellcheck="true"></div>
+        </div>
+        <div class="compose-actions">
+          <button class="btn btn-ghost" onclick="cancelCompose()">Cancel</button>
+          <button class="btn btn-success" onclick="publishNewsletter()">Publish Issue</button>
+        </div>
+      </div>
+
+      <div id="nl-list"><div class="loading"><div class="spinner"></div>Loading newsletters…</div></div>
+    </div>
+
+    <!-- RULES TAB -->
+    <div class="tab" id="tab-rules">
+      <div class="tab-header">
+        <div>
+          <div class="tab-title">Community Rules</div>
+          <div class="tab-subtitle">The code of conduct</div>
+        </div>
+      </div>
+      <div class="rules-container">
+        <div class="rules-intro">
+          A.I.M is a community built on mutual respect, intellectual curiosity, and a shared passion for the evolving landscape of artificial intelligence. These rules exist to keep that space worth showing up to.
+        </div>
+        <div id="rules-list"></div>
+      </div>
+    </div>
+
+    <!-- RANKS TAB -->
+    <div class="tab" id="tab-ranks">
+      <div class="tab-header">
+        <div>
+          <div class="tab-title">Member Ranks</div>
+          <div class="tab-subtitle">Roles & privileges</div>
+        </div>
+      </div>
+      <div class="ranks-grid" id="ranks-grid"></div>
+    </div>
+
+    <!-- SETTINGS TAB -->
+    <div class="tab" id="tab-settings">
+      <div class="tab-header">
+        <div>
+          <div class="tab-title">Settings</div>
+          <div class="tab-subtitle">Account & data</div>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-section-title">Account</div>
+        <div class="settings-card">
+          <div class="settings-row">
+            <div>
+              <div class="settings-label">Username</div>
+              <div class="settings-value" id="settings-username">—</div>
+            </div>
+          </div>
+          <div class="settings-row" style="border-top:1px solid var(--border); margin-top:1rem; padding-top:1rem;">
+            <div>
+              <div class="settings-label">Member since</div>
+              <div class="settings-value" id="settings-joined">—</div>
+            </div>
+          </div>
+          <div class="settings-row" style="border-top:1px solid var(--border); margin-top:1rem; padding-top:1rem;">
+            <div>
+              <div class="settings-label">Role</div>
+              <div class="settings-value" id="settings-role">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-section-title">Change Password</div>
+        <div class="settings-card">
+          <div id="pw-success" class="auth-error" style="background:rgba(80,200,120,0.12);border-color:rgba(80,200,120,0.3);color:#80e0a0;"></div>
+          <div id="pw-error" class="auth-error"></div>
+          <div class="field">
+            <label>Current Password</label>
+            <input type="password" id="pw-current" placeholder="Your current password">
+          </div>
+          <div class="field">
+            <label>New Password</label>
+            <input type="password" id="pw-new" placeholder="At least 6 characters">
+          </div>
+          <div class="field">
+            <label>Confirm New Password</label>
+            <input type="password" id="pw-new2" placeholder="Repeat new password">
+          </div>
+          <button class="btn btn-primary" style="width:auto;padding:0.5rem 1.25rem;" onclick="changePassword()">Update Password</button>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-section-title">Export Your Data</div>
+        <div class="settings-card">
+          <p class="settings-desc">Download a backup file containing your account information. You can use this file to restore your account on any device.</p>
+          <button class="btn btn-ghost" style="margin-top:0.75rem;" onclick="exportData()">⬇ Download Backup File</button>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <div class="settings-section-title" style="color:var(--danger)">Danger Zone</div>
+        <div class="settings-card" style="border-color:rgba(224,80,80,0.2)">
+          <p class="settings-desc">Permanently delete your account. This cannot be undone. Newsletters you authored will remain.</p>
+          <button class="btn btn-danger" style="margin-top:0.75rem;" onclick="deleteAccount()">Delete My Account</button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Read Modal -->
+<div class="modal-overlay" id="read-modal" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <div class="modal-issue" id="modal-issue-label"></div>
+        <div class="modal-title" id="modal-title"></div>
+      </div>
+      <button class="modal-close" onclick="closeModalBtn()">✕</button>
+    </div>
+    <div class="modal-meta" id="modal-meta"></div>
+    <div class="modal-body" id="modal-body"></div>
+    <div id="modal-reactions"></div>
+    <div id="modal-comments"></div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<!-- Firebase -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+  getFirestore, collection, doc,
+  addDoc, setDoc, getDoc, getDocs, deleteDoc, updateDoc,
+  query, orderBy, onSnapshot, serverTimestamp, arrayUnion, arrayRemove
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// ─── FIREBASE INIT ────────────────────────────────────────────────
+const firebaseConfig = {
+  apiKey: "AIzaSyCDR3HA9pDcQ0B79YlLKJk7q_kBzC-nnhQ",
+  authDomain: "aim-newsletter-78363.firebaseapp.com",
+  projectId: "aim-newsletter-78363",
+  storageBucket: "aim-newsletter-78363.firebasestorage.app",
+  messagingSenderId: "603380671331",
+  appId: "1:603380671331:web:50adf89496795808e56956",
+  measurementId: "G-8H6RP9F9MW"
+};
+
+const fbApp = initializeApp(firebaseConfig);
+const db    = getFirestore(fbApp);
+
+// ─── LOCAL USER STORAGE (accounts stay on-device) ─────────────────
+const ADMIN_USERNAME = 'AIMAdmin';
+const ADMIN_PASSWORD = 'aim2024admin';
+
+function getUsers()        { return JSON.parse(localStorage.getItem('aim_users') || '{}'); }
+function saveUsers(u)      { localStorage.setItem('aim_users', JSON.stringify(u)); }
+function getSession()      { try { return JSON.parse(sessionStorage.getItem('aim_session')); } catch { return null; } }
+function saveSession(u)    { sessionStorage.setItem('aim_session', JSON.stringify(u)); }
+function clearSession()    { sessionStorage.removeItem('aim_session'); }
+
+// Seed admin
+(function() {
+  const users = getUsers();
+  if (!users[ADMIN_USERNAME.toLowerCase()]) {
+    users[ADMIN_USERNAME.toLowerCase()] = { username: ADMIN_USERNAME, password: ADMIN_PASSWORD, isAdmin: true, joined: new Date().toISOString() };
+    saveUsers(users);
+  }
+})();
+
+// ─── STATE ────────────────────────────────────────────────────────
+let currentUser      = null;
+let currentModalNlId = null;
+let nlUnsubscribe    = null;
+let newsletters      = [];   // live cache
+
+// ─── AUTH ─────────────────────────────────────────────────────────
+window.showRegister = () => { document.getElementById('login-form').style.display='none'; document.getElementById('register-form').style.display='block'; };
+window.showLogin    = () => { document.getElementById('register-form').style.display='none'; document.getElementById('login-form').style.display='block'; };
+
+window.doLogin = () => {
+  const user = document.getElementById('login-user').value.trim();
+  const pass = document.getElementById('login-pass').value;
+  const errEl = document.getElementById('auth-error');
+  errEl.style.display = 'none';
+  if (!user || !pass) { errEl.textContent='Please enter your username and password.'; errEl.style.display='block'; return; }
+  const users = getUsers();
+  const key   = user.toLowerCase();
+  if (!users[key] || users[key].password !== pass) { errEl.textContent='Incorrect username or password.'; errEl.style.display='block'; return; }
+  currentUser = users[key];
+  saveSession(currentUser);
+  launchApp();
+};
+
+window.doRegister = () => {
+  const user  = document.getElementById('reg-user').value.trim();
+  const pass  = document.getElementById('reg-pass').value;
+  const pass2 = document.getElementById('reg-pass2').value;
+  const errEl = document.getElementById('reg-error');
+  errEl.style.display = 'none';
+  if (!user || !pass)    { errEl.textContent='Please fill in all fields.'; errEl.style.display='block'; return; }
+  if (user.length < 3)   { errEl.textContent='Username must be at least 3 characters.'; errEl.style.display='block'; return; }
+  if (pass.length < 6)   { errEl.textContent='Password must be at least 6 characters.'; errEl.style.display='block'; return; }
+  if (pass !== pass2)    { errEl.textContent='Passwords do not match.'; errEl.style.display='block'; return; }
+  const users = getUsers();
+  const key   = user.toLowerCase();
+  if (users[key]) { errEl.textContent='That username is already taken.'; errEl.style.display='block'; return; }
+  users[key] = { username: user, password: pass, isAdmin: false, joined: new Date().toISOString() };
+  saveUsers(users);
+  currentUser = users[key];
+  saveSession(currentUser);
+  launchApp();
+};
+
+window.doLogout = () => {
+  if (nlUnsubscribe) nlUnsubscribe();
+  clearSession();
+  currentUser = null;
+  newsletters = [];
+  document.getElementById('app').style.display          = 'none';
+  document.getElementById('auth-screen').style.display  = 'flex';
+  document.getElementById('admin-badge').style.display  = 'none';
+  document.getElementById('compose-btn').style.display  = 'none';
+  document.getElementById('login-user').value = '';
+  document.getElementById('login-pass').value = '';
+  showLogin();
+};
+
+// ─── LAUNCH APP ───────────────────────────────────────────────────
+function launchApp() {
+  document.getElementById('auth-screen').style.display = 'none';
+  document.getElementById('app').style.display         = 'flex';
+
+  document.getElementById('user-avatar-letter').textContent = currentUser.username.slice(0,2).toUpperCase();
+  document.getElementById('header-username').textContent    = currentUser.username;
+
+  if (currentUser.isAdmin) {
+    document.getElementById('admin-badge').style.display  = 'inline-flex';
+    document.getElementById('compose-btn').style.display  = 'inline-flex';
+  }
+
+  document.getElementById('settings-username').textContent = currentUser.username;
+  document.getElementById('settings-joined').textContent   = formatDate(currentUser.joined);
+  document.getElementById('settings-role').textContent     = currentUser.isAdmin ? '★ Admin' : 'Member';
+
+  showTab('newsletters');
+  subscribeNewsletters();
+  renderRules();
+  renderRanks();
+}
+
+// ─── FIRESTORE: LIVE NEWSLETTER SUBSCRIPTION ─────────────────────
+function subscribeNewsletters() {
+  const q = query(collection(db, 'newsletters'), orderBy('issueNumber', 'desc'));
+  nlUnsubscribe = onSnapshot(q, snap => {
+    newsletters = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderNewsletters();
+  }, err => {
+    console.error('Firestore error:', err);
+    document.getElementById('nl-list').innerHTML = `<div class="empty"><div class="empty-icon">⚠️</div><div class="empty-title">Could not load newsletters</div><div class="empty-sub">${err.message}</div></div>`;
+  });
+}
+
+// ─── TABS ─────────────────────────────────────────────────────────
+window.showTab = (name) => {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  document.getElementById('tab-btn-' + name).classList.add('active');
+};
+
+// ─── COMPOSE ──────────────────────────────────────────────────────
+let composeOpen = false;
+
+window.toggleCompose = () => {
+  composeOpen = !composeOpen;
+  const area = document.getElementById('compose-area');
+  if (composeOpen) {
+    area.classList.add('open');
+    document.getElementById('nl-title').focus();
+    document.getElementById('compose-btn').textContent = '✕ Cancel';
+  } else {
+    area.classList.remove('open');
+    document.getElementById('compose-btn').textContent = '+ New Issue';
+    clearCompose();
+  }
+};
+
+window.cancelCompose = () => {
+  composeOpen = false;
+  document.getElementById('compose-area').classList.remove('open');
+  document.getElementById('compose-btn').textContent = '+ New Issue';
+  clearCompose();
+};
+
+function clearCompose() {
+  document.getElementById('nl-title').value   = '';
+  document.getElementById('nl-summary').value = '';
+  document.getElementById('editor').innerHTML = '';
+}
+
+window.fmt      = cmd => { document.getElementById('editor').focus(); document.execCommand(cmd, false, null); };
+window.fmtBlock = tag => { document.getElementById('editor').focus(); document.execCommand('formatBlock', false, tag); };
+
+window.publishNewsletter = async () => {
+  if (!currentUser || !currentUser.isAdmin) return;
+  const title   = document.getElementById('nl-title').value.trim();
+  const summary = document.getElementById('nl-summary').value.trim();
+  const body    = document.getElementById('editor').innerHTML.trim();
+
+  if (!title)                  { toast('Please enter a title.'); return; }
+  if (!summary)                { toast('Please enter a summary.'); return; }
+  if (!body || body === '<br>') { toast('Please write some content.'); return; }
+
+  const nextIssue = newsletters.length > 0 ? Math.max(...newsletters.map(n => n.issueNumber || 0)) + 1 : 1;
+
+  try {
+    await addDoc(collection(db, 'newsletters'), {
+      issueNumber: nextIssue,
+      title, summary, body,
+      author: currentUser.username,
+      date: new Date().toISOString(),
+      createdAt: serverTimestamp(),
+      reactions: { up: [], down: [] },
+      comments: []
+    });
+    cancelCompose();
+    toast('Issue #' + nextIssue + ' published.');
+  } catch(e) {
+    toast('Error publishing: ' + e.message);
+  }
+};
+
+// ─── DELETE NEWSLETTER ────────────────────────────────────────────
+window.deleteNewsletter = async (id) => {
+  if (!currentUser || !currentUser.isAdmin) return;
+  if (!confirm('Delete this newsletter issue?')) return;
+  try {
+    await deleteDoc(doc(db, 'newsletters', id));
+    toast('Issue deleted.');
+  } catch(e) {
+    toast('Error: ' + e.message);
+  }
+};
+
+// ─── RENDER NEWSLETTERS ───────────────────────────────────────────
+function renderNewsletters() {
+  const el      = document.getElementById('nl-list');
+  const isAdmin = currentUser && currentUser.isAdmin;
+  const me      = currentUser ? currentUser.username : '';
+
+  if (newsletters.length === 0) {
+    el.innerHTML = `<div class="empty"><div class="empty-icon">📡</div><div class="empty-title">No issues yet</div><div class="empty-sub">The first issue is waiting to be written.</div></div>`;
+    return;
+  }
+
+  el.innerHTML = newsletters.map(n => {
+    const r      = n.reactions || { up: [], down: [] };
+    const myVote = r.up.includes(me) ? 'up' : r.down.includes(me) ? 'down' : '';
+    const nlComs = n.comments || [];
+
+    const reactionsHtml = isAdmin ? '' : `
+      <div class="nl-reactions">
+        <button class="reaction-btn ${myVote==='up'?'active-up':''}" onclick="reactNl('${n.id}','up','${myVote}')">
+          👍 <span class="reaction-count">${r.up.length}</span>
+        </button>
+        <button class="reaction-btn ${myVote==='down'?'active-down':''}" onclick="reactNl('${n.id}','down','${myVote}')">
+          👎 <span class="reaction-count">${r.down.length}</span>
+        </button>
+      </div>`;
+
+    const commentsHtml = isAdmin ? '' : `
+      <div class="nl-comments" id="comments-section-${n.id}">
+        <button class="comments-toggle" onclick="toggleComments('${n.id}')">
+          💬 ${nlComs.length} comment${nlComs.length!==1?'s':''} — click to ${nlComs.length?'view':'add'}
+        </button>
+        <div class="comments-panel" id="comments-panel-${n.id}" style="display:none">
+          <div id="comments-list-${n.id}">${renderCommentsList(nlComs, n.id)}</div>
+          <div class="comment-input-row">
+            <input type="text" id="comment-input-${n.id}" placeholder="Write a comment…" maxlength="280"
+              onkeydown="if(event.key==='Enter')postComment('${n.id}')">
+            <button onclick="postComment('${n.id}')">Post</button>
+          </div>
+        </div>
+      </div>`;
+
+    return `
+      <div class="newsletter-card">
+        <div class="nl-meta">
+          <span class="nl-issue">Issue #${n.issueNumber}</span>
+          <span class="nl-date">${formatDate(n.date)}</span>
+        </div>
+        <div class="nl-title">${escHtml(n.title)}</div>
+        <div class="nl-summary">${escHtml(n.summary)}</div>
+        <div class="nl-footer">
+          <span class="nl-author">By ${escHtml(n.author)}</span>
+          <div class="nl-actions">
+            ${isAdmin ? `<button class="btn-read" style="color:var(--danger);border-color:rgba(224,80,80,0.25)" onclick="deleteNewsletter('${n.id}')">Delete</button>` : ''}
+            <button class="btn-read" onclick="openNewsletter('${n.id}')">Read →</button>
+          </div>
+        </div>
+        ${reactionsHtml}
+        ${commentsHtml}
+      </div>`;
+  }).join('');
+}
+
+function renderCommentsList(comments, nlId) {
+  if (!comments.length) return '';
+  const isAdmin = currentUser && currentUser.isAdmin;
+  const me = currentUser ? currentUser.username : '';
+  return comments.map((c, i) => `
+    <div class="comment-item">
+      <div class="comment-header">
+        <span class="comment-author">${escHtml(c.author)}</span>
+        <span style="display:flex;align-items:center;gap:0.4rem">
+          <span class="comment-date">${formatDate(c.date)}</span>
+          ${(isAdmin || c.author === me) ? `<button class="comment-delete" onclick="deleteComment('${nlId}',${i})" title="Delete">✕</button>` : ''}
+        </span>
+      </div>
+      <div class="comment-text">${escHtml(c.text)}</div>
+    </div>`).join('');
+}
+
+// ─── REACTIONS ────────────────────────────────────────────────────
+window.reactNl = async (nlId, type, currentVote) => {
+  if (!currentUser || currentUser.isAdmin) return;
+  const me   = currentUser.username;
+  const ref  = doc(db, 'newsletters', nlId);
+  const opp  = type === 'up' ? 'down' : 'up';
+
+  try {
+    if (currentVote === type) {
+      // toggle off
+      await updateDoc(ref, { [`reactions.${type}`]: arrayRemove(me) });
+    } else {
+      // switch or add
+      await updateDoc(ref, {
+        [`reactions.${type}`]: arrayUnion(me),
+        [`reactions.${opp}`]:  arrayRemove(me)
+      });
+    }
+  } catch(e) { toast('Error: ' + e.message); }
+};
+
+// ─── COMMENTS ─────────────────────────────────────────────────────
+window.toggleComments = (nlId) => {
+  const panel = document.getElementById('comments-panel-' + nlId);
+  if (!panel) return;
+  const isOpen = panel.style.display !== 'none';
+  panel.style.display = isOpen ? 'none' : 'block';
+  if (!isOpen) { const inp = document.getElementById('comment-input-' + nlId); if (inp) inp.focus(); }
+};
+
+window.postComment = async (nlId) => {
+  if (!currentUser || currentUser.isAdmin) return;
+  const inp  = document.getElementById('comment-input-' + nlId);
+  const text = inp ? inp.value.trim() : '';
+  if (!text) return;
+
+  const nl = newsletters.find(n => n.id === nlId);
+  if (!nl) return;
+
+  const newComment = { author: currentUser.username, text, date: new Date().toISOString() };
+  const updated    = [...(nl.comments || []), newComment];
+
+  try {
+    await updateDoc(doc(db, 'newsletters', nlId), { comments: updated });
+    inp.value = '';
+  } catch(e) { toast('Error: ' + e.message); }
+};
+
+window.deleteComment = async (nlId, idx) => {
+  if (!currentUser) return;
+  const nl = newsletters.find(n => n.id === nlId);
+  if (!nl) return;
+  const c = (nl.comments || [])[idx];
+  if (!c) return;
+  if (!currentUser.isAdmin && c.author !== currentUser.username) return;
+  const updated = [...nl.comments];
+  updated.splice(idx, 1);
+  try {
+    await updateDoc(doc(db, 'newsletters', nlId), { comments: updated });
+    if (currentModalNlId === nlId) renderModalInteractions(nlId);
+  } catch(e) { toast('Error: ' + e.message); }
+};
+
+// ─── MODAL ────────────────────────────────────────────────────────
+window.openNewsletter = (id) => {
+  const nl = newsletters.find(n => n.id === id);
+  if (!nl) return;
+  currentModalNlId = id;
+  document.getElementById('modal-issue-label').textContent = 'Issue #' + nl.issueNumber;
+  document.getElementById('modal-title').textContent       = nl.title;
+  document.getElementById('modal-meta').textContent        = 'Published ' + formatDate(nl.date) + ' · By ' + nl.author;
+  document.getElementById('modal-body').innerHTML          = nl.body;
+  renderModalInteractions(id);
+  document.getElementById('read-modal').classList.add('open');
+};
+
+function renderModalInteractions(nlId) {
+  const nl      = newsletters.find(n => n.id === nlId);
+  if (!nl) return;
+  const isAdmin = currentUser && currentUser.isAdmin;
+  const me      = currentUser ? currentUser.username : '';
+  const r       = nl.reactions || { up: [], down: [] };
+  const myVote  = r.up.includes(me) ? 'up' : r.down.includes(me) ? 'down' : '';
+  const nlComs  = nl.comments || [];
+
+  const reactEl = document.getElementById('modal-reactions');
+  const commEl  = document.getElementById('modal-comments');
+
+  if (isAdmin) { reactEl.innerHTML = ''; commEl.innerHTML = ''; return; }
+
+  reactEl.innerHTML = `
+    <div class="nl-reactions" style="margin-top:1.5rem;">
+      <button class="reaction-btn ${myVote==='up'?'active-up':''}" onclick="reactModalNl('${nlId}','up','${myVote}')">
+        👍 <span class="reaction-count">${r.up.length}</span>
+      </button>
+      <button class="reaction-btn ${myVote==='down'?'active-down':''}" onclick="reactModalNl('${nlId}','down','${myVote}')">
+        👎 <span class="reaction-count">${r.down.length}</span>
+      </button>
+    </div>`;
+
+  commEl.innerHTML = `
+    <div style="margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--border);">
+      <div style="font-size:0.78rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:0.75rem;">Comments</div>
+      <div id="modal-comments-list">${renderCommentsList(nlComs, nlId)}</div>
+      <div class="comment-input-row" style="margin-top:0.75rem;">
+        <input type="text" id="modal-comment-input" placeholder="Write a comment…" maxlength="280"
+          onkeydown="if(event.key==='Enter')postModalComment('${nlId}')">
+        <button onclick="postModalComment('${nlId}')">Post</button>
+      </div>
+    </div>`;
+}
+
+window.reactModalNl = async (nlId, type, currentVote) => {
+  await reactNl(nlId, type, currentVote);
+};
+
+window.postModalComment = async (nlId) => {
+  if (!currentUser || currentUser.isAdmin) return;
+  const inp  = document.getElementById('modal-comment-input');
+  const text = inp ? inp.value.trim() : '';
+  if (!text) return;
+  const nl = newsletters.find(n => n.id === nlId);
+  if (!nl) return;
+  const newComment = { author: currentUser.username, text, date: new Date().toISOString() };
+  const updated    = [...(nl.comments || []), newComment];
+  try {
+    await updateDoc(doc(db, 'newsletters', nlId), { comments: updated });
+    inp.value = '';
+  } catch(e) { toast('Error: ' + e.message); }
+};
+
+window.closeModal    = (e) => { if (e.target === document.getElementById('read-modal')) document.getElementById('read-modal').classList.remove('open'); };
+window.closeModalBtn = ()  => { document.getElementById('read-modal').classList.remove('open'); };
+
+// Live-update modal when Firestore pushes a change
+function patchModalIfOpen() {
+  if (currentModalNlId && document.getElementById('read-modal').classList.contains('open')) {
+    renderModalInteractions(currentModalNlId);
+  }
+}
+
+// Hook into the existing onSnapshot so modal stays live
+const _origRender = renderNewsletters;
+// Override: after each snapshot re-render the modal too
+function renderNewslettersAndModal() {
+  _origRender();
+  patchModalIfOpen();
+}
+// Replace the snapshot handler reference
+Object.defineProperty(window, '_renderNewsletter', { value: renderNewslettersAndModal });
+
+// ─── RULES ────────────────────────────────────────────────────────
+const RULES = [
+  { title: 'Respect everyone, always', desc: 'Treat all community members with dignity. Personal attacks, harassment, and discrimination of any kind are not tolerated, regardless of context or provocation.' },
+  { title: 'Stay on topic', desc: 'Discussions should remain relevant to artificial intelligence, technology, or topics covered in A.I.M newsletters. Off-topic threads may be removed without notice.' },
+  { title: 'No spam or self-promotion', desc: 'Unsolicited advertising, affiliate links, repeated self-promotion, or low-effort content designed to generate traffic is prohibited.' },
+  { title: 'Credit your sources', desc: "When sharing research, quotes, or external content, attribute it properly. Plagiarism — passing off others' work as your own — will result in removal." },
+  { title: 'No misinformation', desc: 'Do not spread unverified claims, fabricated data, or deliberate misinformation about AI systems, research findings, or current events.' },
+  { title: 'Protect privacy', desc: 'Never share personal information about others without explicit consent. This includes addresses, emails, workplace details, and any identifying information.' },
+  { title: 'Follow admin direction', desc: 'Administrators have final say on community decisions. If you disagree with a moderation action, raise it respectfully through the appropriate channel — not publicly.' },
+  { title: 'One account per person', desc: 'Creating multiple accounts to circumvent bans or artificially amplify your presence is prohibited and will result in permanent removal.' },
+];
+
+function renderRules() {
+  document.getElementById('rules-list').innerHTML = RULES.map((r,i) => `
+    <div class="rule-item">
+      <div class="rule-num">${String(i+1).padStart(2,'0')}</div>
+      <div class="rule-content">
+        <div class="rule-title">${r.title}</div>
+        <div class="rule-desc">${r.desc}</div>
+      </div>
+    </div>`).join('');
+}
+
+// ─── RANKS ────────────────────────────────────────────────────────
+const RANKS = [
+  { cls:'rank-founder', badge:'★ O-10',         name:'General of the Army',          desc:'Five-star supreme commander. Admin rank — full authority over A.I.M.',              perks:['Publish newsletters','Manage all members','Assign all ranks','Full platform control'] },
+  { cls:'rank-editor',  badge:'✦ O-7 – O-9',    name:'General / Lt. General / Maj. General', desc:'Senior officers with elevated responsibilities and moderation authority.',   perks:['Pin important threads','Remove rule-breaking content','Issue warnings'] },
+  { cls:'rank-senior',  badge:'◈ O-4 – O-6',    name:'Major – Colonel',              desc:'Mid-grade officers. Experienced members who lead by example.',                      perks:['Early access to issues','Officer-only channels','Feedback requests from command'] },
+  { cls:'rank-member',  badge:'○ O-1 – O-3',    name:'Lieutenant – Captain',         desc:'Commissioned officers. Active members in good standing.',                           perks:['Full discussion access','Comment on newsletters','Participate in polls'] },
+  { cls:'rank-senior',  badge:'◈ E-5 – E-9',    name:'Sergeant – Sergeant Major',    desc:'Non-commissioned officers. The backbone of the enlisted ranks.',                    perks:['Full discussion access','NCO channels','Participate in polls'] },
+  { cls:'rank-member',  badge:'○ E-1 – E-4',    name:'Private – Specialist',         desc:'Enlisted soldiers. New and developing members finding their footing.',              perks:['Read all newsletters','View discussions','Reply to threads'] },
+];
+
+function renderRanks() {
+  document.getElementById('ranks-grid').innerHTML = RANKS.map(r => `
+    <div class="rank-card ${r.cls}">
+      <div class="rank-badge">${r.badge}</div>
+      <div class="rank-name">${r.name}</div>
+      <div class="rank-desc">${r.desc}</div>
+      <div class="rank-perks">${r.perks.map(p=>`<div class="perk">${p}</div>`).join('')}</div>
+    </div>`).join('');
+}
+
+// ─── SETTINGS ─────────────────────────────────────────────────────
+window.changePassword = () => {
+  const cur  = document.getElementById('pw-current').value;
+  const nw   = document.getElementById('pw-new').value;
+  const nw2  = document.getElementById('pw-new2').value;
+  const errEl = document.getElementById('pw-error');
+  const okEl  = document.getElementById('pw-success');
+  errEl.style.display = 'none'; okEl.style.display = 'none';
+  if (!cur||!nw||!nw2) { errEl.textContent='Please fill in all fields.'; errEl.style.display='block'; return; }
+  if (cur !== currentUser.password) { errEl.textContent='Current password is incorrect.'; errEl.style.display='block'; return; }
+  if (nw.length < 6) { errEl.textContent='New password must be at least 6 characters.'; errEl.style.display='block'; return; }
+  if (nw !== nw2) { errEl.textContent='New passwords do not match.'; errEl.style.display='block'; return; }
+  const users = getUsers();
+  users[currentUser.username.toLowerCase()].password = nw;
+  saveUsers(users);
+  currentUser.password = nw;
+  saveSession(currentUser);
+  document.getElementById('pw-current').value = '';
+  document.getElementById('pw-new').value     = '';
+  document.getElementById('pw-new2').value    = '';
+  okEl.textContent = 'Password updated successfully.'; okEl.style.display = 'block';
+  setTimeout(() => okEl.style.display='none', 3000);
+};
+
+window.deleteAccount = () => {
+  if (!confirm('Permanently delete your account? This cannot be undone.')) return;
+  const users = getUsers();
+  delete users[currentUser.username.toLowerCase()];
+  saveUsers(users);
+  doLogout();
+  toast('Account deleted.');
+};
+
+window.exportData = () => {
+  if (!currentUser) return;
+  const payload = { _aim_backup:true, version:1, exportedAt:new Date().toISOString(), user:{...currentUser} };
+  const blob = new Blob([JSON.stringify(payload,null,2)], {type:'application/json'});
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = 'aim-backup-'+currentUser.username+'.aim'; a.click();
+  URL.revokeObjectURL(url);
+  toast('Backup downloaded.');
+};
+
+window.handleImportFile = (file) => {
+  if (!file) return;
+  const errEl = document.getElementById('import-error');
+  errEl.style.display = 'none';
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!data._aim_backup || !data.user?.username || !data.user?.password) throw new Error('Invalid backup file.');
+      const importedUser = data.user;
+      const users = getUsers();
+      const key   = importedUser.username.toLowerCase();
+      if (users[key] && users[key].password !== importedUser.password) {
+        errEl.textContent = 'An account with that username exists with a different password.';
+        errEl.style.display = 'block'; return;
+      }
+      users[key] = importedUser;
+      saveUsers(users);
+      currentUser = importedUser;
+      saveSession(currentUser);
+      launchApp();
+      toast('Account restored. Welcome back, ' + importedUser.username + '!');
+    } catch(err) {
+      errEl.textContent = 'Could not read backup: ' + (err.message || 'Invalid file.');
+      errEl.style.display = 'block';
+    }
+  };
+  reader.readAsText(file);
+  document.getElementById('import-file-input').value = '';
+};
+
+// ─── UTILS ────────────────────────────────────────────────────────
+function formatDate(iso) {
+  return new Date(iso).toLocaleDateString('en-AU', { day:'numeric', month:'short', year:'numeric' });
+}
+
+function escHtml(s) {
+  if (!s) return '';
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+let toastTimer;
+function toast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg; el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2800);
+}
+
+// ─── KEYBOARD SHORTCUTS ───────────────────────────────────────────
+document.getElementById('login-pass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+document.getElementById('login-user').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
+
+// Drag-and-drop on import zone
+document.addEventListener('DOMContentLoaded', () => {
+  const drop = document.getElementById('import-drop');
+  if (!drop) return;
+  drop.addEventListener('dragover', e => { e.preventDefault(); drop.style.borderColor='var(--accent)'; });
+  drop.addEventListener('dragleave', () => { drop.style.borderColor=''; });
+  drop.addEventListener('drop', e => { e.preventDefault(); drop.style.borderColor=''; const f=e.dataTransfer.files[0]; if(f) handleImportFile(f); });
+});
+
+// ─── AUTO-LOGIN FROM SESSION ──────────────────────────────────────
+const existingSession = getSession();
+if (existingSession) {
+  const users = getUsers();
+  const found = users[existingSession.username?.toLowerCase()];
+  if (found) { currentUser = found; launchApp(); }
+}
+
+</script>
+</body>
+</html>
