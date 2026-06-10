@@ -6,4 +6,4 @@ Accounts are saved onto LocalStorage, so if you clear your browser you will lose
 
 I have added an export feature which exports all of your account data onto a .aim file, you can import this file back onto the website and start right back.
 
-If you have any other game suggestions or wish for me to implement some new features, please comment!
+If you have any other game suggestions or wish for me to implement some new features, send me a pr.
