@@ -125,53 +125,33 @@
       letter-spacing: .07em; color: #64748b; }
     .mvalue { font-size: 18px; font-weight: 800; color: #a7f3d0; }
 
-    /* Wheel */
-    .wheel-area { text-align: center; margin-bottom: 24px; }
-    .wheel-container {
-      position: relative; width: 400px; height: 400px; margin: 0 auto 16px;
-    }
-    .wheel-pointer {
-      position: absolute; top: -12px; left: 50%;
-      transform: translateX(-50%);
-      font-size: 32px; color: #fde68a;
-      filter: drop-shadow(0 0 8px rgba(253,230,138,0.8));
-      z-index: 10;
-    }
-    .wheel {
-      width: 400px; height: 400px; 
-      border-radius: 50%; position: relative;
-      border: 16px solid #b8972a;
-      box-shadow: 0 0 0 5px #1e293b, 0 10px 40px rgba(0,0,0,.7);
-      transition: transform 3s ease-out;
-      background: #1a1a1a;
-      overflow: hidden;
-    }
-    .wheel canvas {
-      width: 100%; height: 100%;
-    }
-    .wheel-center {
-      position: absolute;
-      top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      width: 60px; height: 60px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #d4af37 0%, #b8972a 100%);
-      box-shadow: 0 2px 8px rgba(0,0,0,.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      z-index: 10;
-      pointer-events: none;
+    /* Number Display */
+    .number-display-area {
+      text-align: center;
+      margin-bottom: 24px;
+      padding: 32px 0 16px;
     }
     
     .result { 
-      font-size: 48px; font-weight: 900; color: #f8fafc; 
-      margin: 16px 0 8px; transition: transform .2s;
+      font-size: 120px; font-weight: 900; color: #f8fafc; 
+      line-height: 1;
+      text-align: center;
+      transition: color 0.05s, transform 0.1s;
+      text-shadow: 0 0 40px rgba(248,250,252,0.4);
+      min-height: 130px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .result.red { color: #ef4444; }
-    .result.black { color: #e2e8f0; }
-    .result-label { color: #94a3b8; font-size: 14px; }
+    .result.red { color: #ef4444; text-shadow: 0 0 40px rgba(239,68,68,0.8); }
+    .result.black { color: #e2e8f0; text-shadow: 0 0 40px rgba(226,232,240,0.6); }
+    .result.green { color: #22c55e; text-shadow: 0 0 40px rgba(34,197,94,0.8); }
+    .result-label { 
+      color: #94a3b8; font-size: 15px; font-weight: 700;
+      margin-top: 8px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
 
     /* Betting */
     .bet-grid { 
@@ -347,16 +327,9 @@
           </div>
         </div>
 
-        <div class="wheel-area">
-          <div class="wheel-container">
-            <div class="wheel-pointer">▼</div>
-            <div class="wheel" id="wheel">
-              <canvas id="wheelCanvas" width="400" height="400"></canvas>
-              <div class="wheel-center">🎰</div>
-            </div>
-          </div>
-          <div class="result" id="result">-</div>
-          <div class="result-label" id="resultLabel">Place your bets</div>
+        <div class="number-display-area">
+          <div class="result" id="result">?</div>
+          <div class="result-label" id="resultLabel">Place your bets & spin!</div>
         </div>
 
         <div class="bet-grid">
@@ -432,6 +405,8 @@
 </div>
 
 <script>
+window.addEventListener('load', function() {
+
 // Game state
 let balance = 500, vault = 0, netProfit = 0, streak = 0, spinsWon = 0, spinsLost = 0;
 let chipValue = 0, bets = {}, spinning = false, lastClickedBet = null;
@@ -441,15 +416,24 @@ const wheelNumbers = [0,32,15,19,4,21,2,25,17,34,6,27,13,36,11,30,8,23,10,5,24,1
 const reds = [1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36];
 const blacks = [2,4,6,8,10,11,13,15,17,20,22,24,26,28,29,31,33,35];
 
-// Sound context
-const thockCtx = new (window.AudioContext || window.webkitAudioContext)();
+// Sound context - lazy init to avoid crash before user interaction
+let thockCtx = null;
+
+function getAudioCtx() {
+  if (!thockCtx) {
+    try { thockCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
+  }
+  return thockCtx;
+}
 
 function playThock() {
   try {
-    const t = thockCtx.currentTime;
-    const o = thockCtx.createOscillator();
-    const g = thockCtx.createGain();
-    o.connect(g); g.connect(thockCtx.destination);
+    const ctx = getAudioCtx();
+    if (!ctx) return;
+    const t = ctx.currentTime;
+    const o = ctx.createOscillator();
+    const g = ctx.createGain();
+    o.connect(g); g.connect(ctx.destination);
     o.type = 'sine';
     o.frequency.setValueAtTime(200, t);
     o.frequency.exponentialRampToValueAtTime(55, t + 0.07);
@@ -472,44 +456,7 @@ function playThock() {
   }
 })();
 
-// Draw wheel
-(function() {
-  const canvas = document.getElementById('wheelCanvas');
-  const ctx = canvas.getContext('2d');
-  const centerX = 200, centerY = 200, radius = 190;
-  const segmentAngle = (2 * Math.PI) / 37;
-  
-  wheelNumbers.forEach((num, i) => {
-    const startAngle = -Math.PI / 2 + (i * segmentAngle);
-    const endAngle = startAngle + segmentAngle;
-    const isRed = reds.includes(num);
-    ctx.fillStyle = num === 0 ? '#16a34a' : isRed ? '#dc2626' : '#1e293b';
-    ctx.beginPath();
-    ctx.moveTo(centerX, centerY);
-    ctx.arc(centerX, centerY, radius, startAngle, endAngle);
-    ctx.closePath();
-    ctx.fill();
-    ctx.strokeStyle = '#000';
-    ctx.lineWidth = 2;
-    ctx.stroke();
-    
-    const textAngle = startAngle + segmentAngle / 2;
-    const textRadius = radius * 0.75;
-    const textX = centerX + Math.cos(textAngle) * textRadius;
-    const textY = centerY + Math.sin(textAngle) * textRadius;
-    ctx.save();
-    ctx.translate(textX, textY);
-    ctx.rotate(textAngle + Math.PI / 2);
-    ctx.fillStyle = '#fff';
-    ctx.font = 'bold 18px Arial';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.shadowColor = 'rgba(0,0,0,0.8)';
-    ctx.shadowBlur = 4;
-    ctx.fillText(num, 0, 0);
-    ctx.restore();
-  });
-})();
+// No wheel - number display only
 
 // Chip selection
 document.querySelectorAll('.chip').forEach(c => {
@@ -588,7 +535,7 @@ document.getElementById('btnAllIn').addEventListener('click', () => {
 });
 
 // Spin
-document.getElementById('btnSpin').addEventListener('click', () => {
+document.getElementById('btnSpin').addEventListener('click', function() {
   const total = Object.values(bets).reduce((a,b)=>a+b,0);
   if(total===0 || spinning) return;
   
@@ -604,9 +551,7 @@ document.getElementById('btnSpin').addEventListener('click', () => {
   const isHigh = winNum>=19 && winNum<=36;
   
   const result = document.getElementById('result');
-  const wheel = document.getElementById('wheel');
   
-  wheel.style.transform = 'rotate(' + (1800 + Math.random()*360) + 'deg)';
   document.getElementById('resultLabel').textContent = 'Spinning...';
   
   let count = 0;
@@ -620,11 +565,13 @@ document.getElementById('btnSpin').addEventListener('click', () => {
       setTimeout(() => result.style.transform = 'scale(1)', 200);
       
       try {
-        const t = thockCtx.currentTime;
+        const actx = getAudioCtx();
+        if (!actx) return;
+        const t = actx.currentTime;
         [523,659,784].forEach((f,i) => {
-          const o = thockCtx.createOscillator();
-          const g = thockCtx.createGain();
-          o.connect(g); g.connect(thockCtx.destination);
+          const o = actx.createOscillator();
+          const g = actx.createGain();
+          o.connect(g); g.connect(actx.destination);
           o.frequency.value = f;
           g.gain.setValueAtTime(0.15, t+i*0.05);
           g.gain.exponentialRampToValueAtTime(0.001, t+i*0.05+0.4);
@@ -672,14 +619,16 @@ document.getElementById('btnSpin').addEventListener('click', () => {
     const rnd = wheelNumbers[Math.floor(Math.random()*37)];
     const rIsRed = reds.includes(rnd);
     result.textContent = rnd;
-    result.className = 'result ' + (rIsRed?'red':'black');
+    result.className = 'result ' + (rnd===0 ? 'green' : rIsRed ? 'red' : 'black');
     
     if(count % 3 === 0) {
       try {
-        const t = thockCtx.currentTime;
-        const o = thockCtx.createOscillator();
-        const g = thockCtx.createGain();
-        o.connect(g); g.connect(thockCtx.destination);
+        const actx = getAudioCtx();
+        if (!actx) return;
+        const t = actx.currentTime;
+        const o = actx.createOscillator();
+        const g = actx.createGain();
+        o.connect(g); g.connect(actx.destination);
         o.frequency.value = 800;
         g.gain.setValueAtTime(0.08, t);
         g.gain.exponentialRampToValueAtTime(0.001, t+0.05);
@@ -709,8 +658,7 @@ document.getElementById('btnRestart').addEventListener('click', () => {
       const amt = b.querySelector('.bet-amount');
       if(amt) amt.remove();
     });
-    document.getElementById('wheel').style.transform = 'rotate(0deg)';
-    document.getElementById('result').textContent = '-';
+    document.getElementById('result').textContent = '?';
     document.getElementById('resultLabel').textContent = 'Fresh start! Place your bets';
     document.getElementById('vaultInput').value = '';
     render();
@@ -756,6 +704,7 @@ document.getElementById('rulesModal').addEventListener('click', (e) => {
 
 // Render
 function render() {
+  try {
   document.getElementById('balance').textContent = '$'+balance;
   document.getElementById('totalBet').textContent = '$'+Object.values(bets).reduce((a,b)=>a+b,0);
   document.getElementById('vaultAmount').textContent = '$'+vault;
@@ -765,6 +714,7 @@ function render() {
   document.getElementById('streakLabel').textContent = streak>=3?'🔥 Hot streak!':'Current streak';
   document.getElementById('spinsWon').textContent = spinsWon;
   document.getElementById('spinsLost').textContent = spinsLost;
+  } catch(e) { console.error('Render error:', e); }
 }
 
 // Attach thock to buttons
@@ -773,6 +723,10 @@ document.querySelectorAll('button').forEach(el => {
 });
 
 render();
+
+
+
+});
 </script>
 
 </body>
