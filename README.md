@@ -9,7 +9,9 @@ ALL PROMPTS WERE HUMAN MADE
 3. **Reaction Tester** - Test your reflexes across 10 rounds
 4. **2048 Puzzle** - Slide and merge tiles with background music
 5. **The Adventures Of Jerib** - Epic platformer with 30 levels, 3 worlds, and 90 secrets
-
+6. **NEW Fruit Slicer** - Cool slice fruit game with moblile support
+7. **NEW Snake** - Snake
+   
 ##  File Structure
 
 ```
