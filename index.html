@@ -1893,7 +1893,39 @@
       font-weight: 700;
       color: #cbd5e1;
     }
-  </style>
+  
+    .status-badge.download {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+    }
+    .status-badge.coming {
+      background: linear-gradient(135deg, #64748b, #475569);
+      color: white;
+    }
+    .play-btn-download {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+      border-color: #3b82f6 !important;
+      color: white !important;
+    }
+    .play-btn-download:hover {
+      background: linear-gradient(135deg, #1d4ed8, #1e40af) !important;
+      box-shadow: 0 0 20px rgba(59,130,246,0.5) !important;
+    }
+    .play-btn-disabled {
+      display: inline-block;
+      padding: 10px 20px;
+      background: rgba(100,100,100,0.2);
+      border: 2px solid rgba(100,100,100,0.3);
+      border-radius: 8px;
+      color: #64748b;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: not-allowed;
+    }
+    .coming-soon-card {
+      opacity: 0.6;
+    }
+</style>
 </head>
 <body>
 
@@ -2044,6 +2076,1137 @@
           <a href="fruit_slicer.html" class="play-btn">▶ Play Now</a>
         </div>
       </div>
+
+      <!-- Slope Plus -->
+      <div class="game-card" data-game-name="slopeplus">
+        <div class="game-thumbnail">🎿<span class="status-badge download">Download</span></div>
+        <div class="game-info">
+          <h3 class="game-title">Slope Plus</h3>
+          <p class="game-desc">A fast-paced ball-rolling game with custom maps, modifiers, and extra features. Desktop app — download to play!</p>
+          <a href="SlopePlus1.3.1/Slope Plus.exe" class="play-btn play-btn-download" download>⬇ Download</a>
+        </div>
+      </div>
+
+      <!-- Coming Soon 1 -->
+      <div class="game-card coming-soon-card" data-game-name="coming1" data-status="coming">
+        <div class="game-thumbnail">🎯<span class="status-badge coming">Soon</span></div>
+        <div class="game-info">
+          <h3 class="game-title">Coming Soon</h3>
+          <p class="game-desc">A new game is on its way. Stay tuned!</p>
+          <span class="play-btn play-btn-disabled">🔒 Not Yet</span>
+        </div>
+      </div>
+
+      <!-- Coming Soon 2 -->
+      <div class="game-card coming-soon-card" data-game-name="coming2" data-status="coming">
+        <div class="game-thumbnail">🕹️<span class="status-badge coming">Soon</span></div>
+        <div class="game-info">
+          <h3 class="game-title">Coming Soon</h3>
+          <p class="game-desc">Something exciting is in development!</p>
+          <span class="play-btn play-btn-disabled">🔒 Not Yet</span>
+        </div>
+      </div>
+
+      <!-- Coming Soon 3 -->
+      <div class="game-card coming-soon-card" data-game-name="coming3" data-status="coming">
+        <div class="game-thumbnail">🚀<span class="status-badge coming">Soon</span></div>
+        <div class="game-info">
+          <h3 class="game-title">Coming Soon</h3>
+          <p class="game-desc">More games are on their way!</p>
+          <span class="play-btn play-btn-disabled">🔒 Not Yet</span>
+        </div>
+      </div>
     </div>
 
->
+  <!-- How To Modal -->
+  <div class="modal-overlay" id="howToModal">
+    <div class="poe-modal" style="max-width:700px;">
+      <div class="poe-header">
+        <h2 class="poe-title">📖 HOW TO OPERATE</h2>
+        <button class="modal-close poe-close" id="closeHowTo">✕</button>
+      </div>
+      <div style="padding:24px;overflow-y:auto;max-height:70vh;">
+        <div class="poe-section" style="margin-bottom:16px;">
+          <div class="poe-section-header"><span class="poe-section-icon">🎮</span><span class="poe-section-title">PLAYING GAMES</span></div>
+          <div class="poe-section-content"><p style="color:#cbd5e1;line-height:1.7;">Click any game card to launch it. Each game opens in the same tab. Use the <strong style="color:#ddd6fe;">← Back to ABGames</strong> button inside each game to return to the portal.</p></div>
+        </div>
+        <div class="poe-section" style="margin-bottom:16px;">
+          <div class="poe-section-header"><span class="poe-section-icon">⌨️</span><span class="poe-section-title">KEYBOARD SHORTCUTS</span></div>
+          <div class="poe-section-content">
+            <p style="color:#cbd5e1;line-height:2;"><strong style="color:#ddd6fe;">ESC</strong> — Close any open panel<br><strong style="color:#ddd6fe;">P</strong> — Open your profile<br><strong style="color:#ddd6fe;">A</strong> — Open achievements</p>
+          </div>
+        </div>
+        <div class="poe-section" style="margin-bottom:16px;">
+          <div class="poe-section-header"><span class="poe-section-icon">🏆</span><span class="poe-section-title">EARNING XP & LEVELLING UP</span></div>
+          <div class="poe-section-content"><p style="color:#cbd5e1;line-height:1.7;">You earn <strong style="color:#ddd6fe;">+10 XP</strong> every time you play a game. Unlock achievements and complete daily quests for bonus XP. Max level is <strong style="color:#ddd6fe;">50</strong>.</p></div>
+        </div>
+        <div class="poe-section">
+          <div class="poe-section-header"><span class="poe-section-icon">💾</span><span class="poe-section-title">SAVING YOUR PROGRESS</span></div>
+          <div class="poe-section-content"><p style="color:#cbd5e1;line-height:1.7;">All progress is saved automatically in your browser. Use <strong style="color:#ddd6fe;">Profile → Download Backup</strong> to export your save file and keep it safe.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Credits Modal -->
+  <div class="modal-overlay credits-modal" id="creditsModal">
+    <div class="poe-modal poe-credits">
+      <div class="poe-header">
+        <h2 class="poe-title">👤 CREDITS</h2>
+        <button class="modal-close poe-close" id="closeCredits">✕</button>
+      </div>
+      <div class="credits-content">
+        <div class="credits-hero">
+          <div class="credits-hero-icon">🎮</div>
+          <h3 class="credits-hero-title">ABGames</h3>
+          <p class="credits-hero-subtitle">A Premium Browser Gaming Portal</p>
+        </div>
+        <div class="credits-section">
+          <div class="credits-section-title">✨ Created By</div>
+          <div class="credits-card">
+            <div class="credits-avatar">👨‍💻</div>
+            <div class="credits-info">
+              <div class="credits-name">bengaliboss</div>
+              <div class="credits-role">Lead Developer & Designer</div>
+              <div class="credits-desc">Project creator, game designer, and UI/UX architect</div>
+            </div>
+          </div>
+        </div>
+        <div class="credits-section">
+          <div class="credits-section-title">🙏 Special Thanks</div>
+          <div class="credits-card">
+            <div class="credits-avatar">🤖</div>
+            <div class="credits-info">
+              <div class="credits-name">Claude (Anthropic)</div>
+              <div class="credits-role">AI Development Partner</div>
+              <div class="credits-desc">Code generation, architecture design, and feature implementation</div>
+            </div>
+          </div>
+          <div class="credits-card">
+            <div class="credits-avatar">🎨</div>
+            <div class="credits-info">
+              <div class="credits-name">TBN</div>
+              <div class="credits-role">Creative Consultant</div>
+              <div class="credits-desc">Design feedback and creative direction</div>
+            </div>
+          </div>
+        </div>
+        <div class="credits-section">
+          <div class="credits-section-title">⚙️ Built With</div>
+          <div class="tech-grid">
+            <div class="tech-item"><div class="tech-icon">📝</div><div class="tech-name">HTML5</div></div>
+            <div class="tech-item"><div class="tech-icon">🎨</div><div class="tech-name">CSS3</div></div>
+            <div class="tech-item"><div class="tech-icon">⚡</div><div class="tech-name">JavaScript</div></div>
+            <div class="tech-item"><div class="tech-icon">🎵</div><div class="tech-name">Web Audio API</div></div>
+            <div class="tech-item"><div class="tech-icon">💾</div><div class="tech-name">LocalStorage</div></div>
+          </div>
+        </div>
+        <div class="credits-footer">
+          <div class="credits-version">Version 1.0.0</div>
+          <div class="credits-year">© 2026 ABGames • Made with 💜</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profile Modal -->
+  <div class="modal-overlay profile-modal" id="profileModal">
+    <div class="poe-modal poe-profile" style="width:95vw;max-width:1100px;height:88vh;display:flex;flex-direction:column;">
+      <div class="poe-header">
+        <h2 class="poe-title">👤 PLAYER PROFILE</h2>
+        <button class="modal-close poe-close" id="closeProfile">✕</button>
+      </div>
+      <div class="poe-profile-layout" style="display:flex;gap:24px;padding:24px;overflow-y:auto;flex:1;min-height:0;">
+        <div class="poe-profile-left" style="width:300px;flex-shrink:0;display:flex;flex-direction:column;gap:16px;">
+          <div class="poe-character-card">
+            <div class="poe-char-avatar-container">
+              <div class="poe-char-avatar" id="profileAvatar">
+                <img id="profileAvatarImg" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:50%;">
+                <span id="profileAvatarEmoji">👤</span>
+              </div>
+              <button class="poe-avatar-upload-btn" id="uploadAvatarBtn" title="Upload profile picture">📷</button>
+              <input type="file" id="avatarFileInput" accept="image/*" style="display:none;">
+            </div>
+            <div class="poe-char-name" id="modalUsername">Player</div>
+            <div class="poe-char-title" id="profileLevel">Level 1 • Member since today</div>
+            <div class="poe-xp-container">
+              <div class="poe-xp-label">Experience</div>
+              <div class="poe-xp-bar"><div class="poe-xp-fill" id="xpBarFill" style="width:0%"></div></div>
+              <div class="poe-xp-text" id="xpBarText">0 / 100 XP</div>
+              <div class="poe-xp-percentage" id="xpPercentage">0% to next level</div>
+            </div>
+          </div>
+          <div class="poe-stats-grid">
+            <div class="poe-stat-box"><div class="poe-stat-icon">🎮</div><div class="poe-stat-value" id="totalGamesPlayed">0</div><div class="poe-stat-label">Games Played</div></div>
+            <div class="poe-stat-box"><div class="poe-stat-icon">⏱️</div><div class="poe-stat-value" id="totalPlaytime">0m</div><div class="poe-stat-label">Playtime</div></div>
+            <div class="poe-stat-box" style="grid-column:1/-1"><div class="poe-stat-icon">⭐</div><div class="poe-stat-value-small" id="favoriteGame">None</div><div class="poe-stat-label">Favorite Game</div></div>
+          </div>
+        </div>
+        <div class="poe-profile-right" style="flex:1;display:flex;flex-direction:column;gap:16px;overflow-y:auto;min-width:0;">
+          <div class="poe-section">
+            <div class="poe-section-header"><span class="poe-section-icon">🎯</span><span class="poe-section-title">DAILY QUESTS</span><span class="quests-badge" id="questsCompletedCount">0/4</span></div>
+            <div class="quests-help-banner"><div class="quests-help-icon">ℹ️</div><div class="quests-help-text">Complete quests to earn bonus XP! Resets daily at midnight.</div></div>
+            <div class="poe-section-content" style="max-height:240px;overflow-y:auto;"><div id="dailyQuestsContainer"></div></div>
+          </div>
+          <div class="poe-section">
+            <div class="poe-section-header"><span class="poe-section-icon">⚙️</span><span class="poe-section-title">CHANGE USERNAME</span></div>
+            <div class="poe-section-content">
+              <div class="current-username-display"><span style="color:#94a3b8;font-size:12px;">Current:</span><span style="color:#ddd6fe;font-size:16px;font-weight:700;" id="currentUsernameDisplay">Player</span></div>
+              <input type="text" class="poe-input" id="usernameInput" placeholder="Enter new username..." maxlength="20">
+              <button class="poe-btn poe-btn-primary" id="saveUsernameBtn">💾 Save Username</button>
+            </div>
+          </div>
+          <div class="poe-section">
+            <div class="poe-section-header"><span class="poe-section-icon">💾</span><span class="poe-section-title">BACKUP & RESTORE</span></div>
+            <div class="poe-section-content">
+              <div class="poe-btn-group">
+                <button class="poe-btn poe-btn-secondary" id="exportBtn">📥 Download Backup</button>
+                <button class="poe-btn poe-btn-secondary" id="importBtn">📤 Upload Backup</button>
+              </div>
+              <input type="file" id="importFileInput" accept=".json" style="display:none;">
+              <div class="poe-help-text">Download your profile as a backup. Upload it later to restore.</div>
+            </div>
+          </div>
+          <div class="poe-section">
+            <div class="poe-section-header"><span class="poe-section-icon">🎮</span><span class="poe-section-title">MOST PLAYED</span></div>
+            <div class="poe-section-content"><div id="mostPlayedGames" class="poe-game-list"><div class="poe-game-item">No games played yet</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Achievements Modal -->
+  <div class="modal-overlay achievements-modal" id="achievementsModal">
+    <div class="poe-modal" style="width:95vw;height:85vh;">
+      <div class="poe-header">
+        <h2 class="poe-title">🏆 ACHIEVEMENTS</h2>
+        <button class="modal-close poe-close" id="closeAchievements">✕</button>
+      </div>
+      <div style="display:flex;flex:1;overflow:hidden;">
+        <div class="poe-sidebar">
+          <input type="text" id="achievementSearch" class="poe-search" placeholder="🔍 Search achievements...">
+          <div class="poe-categories">
+            <button class="poe-category active" data-category="all">All <span id="progressAll">0/0</span></button>
+            <button class="poe-category" data-category="general">General <span id="progressGeneral">0/0</span></button>
+            <button class="poe-category" data-category="blackjack">Blackjack <span id="progressBlackjack">0/0</span></button>
+            <button class="poe-category" data-category="roulette">Roulette <span id="progressRoulette">0/0</span></button>
+            <button class="poe-category" data-category="reaction">Reaction <span id="progressReaction">0/0</span></button>
+            <button class="poe-category" data-category="2048">2048 <span id="progress2048">0/0</span></button>
+            <button class="poe-category" data-category="platformer">Platformer <span id="progressPlatformer">0/0</span></button>
+          </div>
+        </div>
+        <div class="poe-content">
+          <div class="poe-content-header">
+            <span id="currentCategoryName">All Achievements</span>
+            <span id="currentCategoryProgress"></span>
+          </div>
+          <div class="poe-achievement-grid" id="achievementGrid"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="modal-overlay settings-modal" id="settingsModal">
+    <div class="poe-modal poe-settings">
+      <div class="poe-header">
+        <h2 class="poe-title">⚙️ SETTINGS</h2>
+        <button class="modal-close poe-close" id="closeSettings">✕</button>
+      </div>
+      <div class="settings-content">
+        <div class="settings-section">
+          <div class="settings-section-title">🔊 Audio</div>
+          <div class="setting-item"><div class="setting-label">Master Volume</div><div class="setting-control"><input type="range" id="masterVolumeSlider" min="0" max="100" value="100" class="volume-slider"><span class="volume-value" id="masterVolumeValue">100%</span></div></div>
+          <div class="setting-item"><div class="setting-label">Sound Effects</div><div class="setting-control"><label class="toggle-switch"><input type="checkbox" id="soundEffectsToggle" checked><span class="toggle-slider"></span></label></div></div>
+          <div class="setting-item"><div class="setting-label">Background Music</div><div class="setting-control"><label class="toggle-switch"><input type="checkbox" id="backgroundMusicToggle" checked><span class="toggle-slider"></span></label></div></div>
+        </div>
+        <div class="settings-section">
+          <div class="settings-section-title">🎨 Display</div>
+          <div class="setting-item"><div class="setting-label">Reduce Animations</div><div class="setting-control"><label class="toggle-switch"><input type="checkbox" id="reduceAnimationsToggle"><span class="toggle-slider"></span></label></div></div>
+          <div class="setting-item"><div class="setting-label">Show XP Popups</div><div class="setting-control"><label class="toggle-switch"><input type="checkbox" id="showXPPopupsToggle" checked><span class="toggle-slider"></span></label></div></div>
+        </div>
+        <div class="settings-section">
+          <div class="settings-section-title">💾 Data</div>
+          <div class="setting-item"><div class="setting-label">Storage Used</div><div class="setting-control"><span class="storage-info" id="storageUsed">—</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  document.addEventListener('DOMContentLoaded', function() {
+
+    // ═══════════════════════════════════════════════════════════════
+    // PROFILE SYSTEM
+    // ═══════════════════════════════════════════════════════════════
+
+    function loadProfile() {
+      try {
+        const saved = localStorage.getItem('abgames_profile');
+        if (saved) return JSON.parse(saved);
+      } catch(e) {}
+      return {
+        username: 'Player', avatar: null,
+        createdAt: new Date().toISOString(),
+        totalGamesPlayed: 0, totalPlaytimeMinutes: 0,
+        totalXP: 0, achievements: [], gameStats: {}
+      };
+    }
+
+    function saveProfile(profile) {
+      try {
+        const today = new Date().toDateString();
+        const savedDate = localStorage.getItem('abgames_daily_xp_date');
+        const newXP = profile.totalXP || 0;
+        const oldXP = parseInt(localStorage.getItem('abgames_daily_xp') || '0');
+        const xpGained = newXP - oldXP;
+        if (xpGained > 0) {
+          if (savedDate !== today) {
+            localStorage.setItem('abgames_daily_xp_earned', '0');
+            localStorage.setItem('abgames_daily_xp_date', today);
+          } else {
+            const earned = parseInt(localStorage.getItem('abgames_daily_xp_earned') || '0');
+            localStorage.setItem('abgames_daily_xp_earned', (earned + xpGained).toString());
+            updateQuestProgress('earn_100_xp', xpGained);
+          }
+          localStorage.setItem('abgames_daily_xp', newXP.toString());
+        }
+        localStorage.setItem('abgames_profile', JSON.stringify(profile));
+      } catch(e) { console.error('Error saving profile:', e); }
+    }
+
+    function calculateLevel(totalXP) {
+      const thresholds = [];
+      let xp = 0;
+      for (let i = 1; i <= 50; i++) {
+        let needed;
+        if (i <= 10) needed = Math.floor(100 * Math.pow(1.5, i-1));
+        else if (i <= 20) needed = Math.floor(5000 * Math.pow(1.2, i-11));
+        else if (i <= 30) needed = Math.floor(30000 * Math.pow(1.2, i-21));
+        else if (i <= 40) needed = Math.floor(200000 * Math.pow(1.25, i-31));
+        else needed = Math.floor(2000000 * Math.pow(1.3, i-41));
+        thresholds.push({ level: i, xpRequired: xp, xpForNextLevel: needed });
+        xp += needed;
+      }
+      let current = thresholds[0];
+      for (let t of thresholds) {
+        if (totalXP >= t.xpRequired) current = t;
+        else break;
+      }
+      return {
+        level: current.level,
+        currentXP: totalXP - current.xpRequired,
+        xpForNextLevel: current.xpForNextLevel
+      };
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // ACHIEVEMENTS
+    // ═══════════════════════════════════════════════════════════════
+
+    const ACHIEVEMENTS = [
+      { id: 'first_game', name: 'First Steps', icon: '👶', xp: 10, category: 'general', desc: 'Play your first game' },
+      { id: 'five_games', name: 'Getting Warmed Up', icon: '🔥', xp: 25, category: 'general', desc: 'Play 5 games total' },
+      { id: 'twenty_games', name: 'Regular Player', icon: '🎮', xp: 75, category: 'general', desc: 'Play 20 games total' },
+      { id: 'fifty_games', name: 'Dedicated', icon: '💪', xp: 200, category: 'general', desc: 'Play 50 games total' },
+      { id: 'hundred_games', name: 'Centurion', icon: '💯', xp: 500, category: 'general', desc: 'Play 100 games total' },
+      { id: 'all_games', name: 'Explorer', icon: '🗺️', xp: 150, category: 'general', desc: 'Play all 8 available games' },
+      { id: 'one_hour', name: 'Time Well Spent', icon: '⏰', xp: 100, category: 'general', desc: 'Play for 1 hour total' },
+      { id: 'five_hours', name: 'Marathon Gamer', icon: '🏃', xp: 300, category: 'general', desc: 'Play for 5 hours total' },
+      { id: 'level_10', name: 'Rising Star', icon: '⭐', xp: 0, category: 'general', desc: 'Reach Level 10' },
+      { id: 'level_25', name: 'Veteran', icon: '🌟', xp: 0, category: 'general', desc: 'Reach Level 25' },
+      { id: 'level_50', name: 'Legend', icon: '👑', xp: 0, category: 'general', desc: 'Reach Level 50' },
+      { id: 'custom_name', name: 'Identity', icon: '✏️', xp: 15, category: 'general', desc: 'Customize your username' },
+      { id: 'blackjack_player', name: 'Card Shark', icon: '🃏', xp: 20, category: 'blackjack', desc: 'Play Blackjack' },
+      { id: 'roulette_player', name: 'High Roller', icon: '🎰', xp: 20, category: 'roulette', desc: 'Play Roulette' },
+      { id: 'reaction_player', name: 'Quick Reflexes', icon: '⚡', xp: 20, category: 'reaction', desc: 'Play Reaction Tester' },
+      { id: '2048_first_merge', name: 'First Merge', icon: '🔢', xp: 10, category: '2048', desc: 'Merge your first tiles in 2048' },
+      { id: '2048_reach_256', name: '256!', icon: '🎯', xp: 30, category: '2048', desc: 'Create a 256 tile' },
+      { id: '2048_reach_1024', name: 'Power of 2', icon: '🔥', xp: 75, category: '2048', desc: 'Create a 1024 tile' },
+      { id: '2048_reach_2048', name: '2048 Master', icon: '🏆', xp: 250, category: '2048', desc: 'Create a 2048 tile!' },
+      { id: 'platformer_first_level', name: 'First Jump', icon: '🎮', xp: 15, category: 'platformer', desc: 'Complete your first level' },
+      { id: 'platformer_world1_complete', name: 'Earth Master', icon: '🌍', xp: 60, category: 'platformer', desc: 'Complete all Earth levels (1-10)' },
+      { id: 'platformer_all_levels', name: 'True Hero', icon: '🦸', xp: 500, category: 'platformer', desc: 'Complete all 30 levels' },
+      { id: 'platformer_first_secret', name: 'Secret Finder', icon: '🔍', xp: 25, category: 'platformer', desc: 'Find your first secret' },
+      { id: 'platformer_all_secrets', name: 'Secret Master', icon: '🗝️', xp: 400, category: 'platformer', desc: 'Find all 90 secrets' },
+    ];
+
+    function checkAchievements() {
+      const profile = loadProfile();
+      const newUnlocks = [];
+
+      function unlock(id) {
+        if (profile.achievements.find(a => a.id === id)) return;
+        const ach = ACHIEVEMENTS.find(a => a.id === id);
+        if (!ach) return;
+        profile.achievements.push({ id, unlockedAt: new Date().toISOString() });
+        profile.totalXP = (profile.totalXP || 0) + ach.xp;
+        newUnlocks.push(ach);
+      }
+
+      const played = profile.totalGamesPlayed || 0;
+      if (played >= 1) unlock('first_game');
+      if (played >= 5) unlock('five_games');
+      if (played >= 20) unlock('twenty_games');
+      if (played >= 50) unlock('fifty_games');
+      if (played >= 100) unlock('hundred_games');
+
+      const gamesUnique = Object.keys(profile.gameStats || {});
+      if (gamesUnique.length >= 8) unlock('all_games');
+      if (gamesUnique.includes('blackjack')) unlock('blackjack_player');
+      if (gamesUnique.includes('roulette')) unlock('roulette_player');
+      if (gamesUnique.includes('reactiontester')) unlock('reaction_player');
+
+      const levelInfo = calculateLevel(profile.totalXP || 0);
+      if (levelInfo.level >= 10) unlock('level_10');
+      if (levelInfo.level >= 25) unlock('level_25');
+      if (levelInfo.level >= 50) unlock('level_50');
+
+      if (profile.username && profile.username !== 'Player') unlock('custom_name');
+
+      if (newUnlocks.length > 0) {
+        saveProfile(profile);
+        newUnlocks.forEach((ach, i) => {
+          setTimeout(() => {
+            showNotification('', 'achievement', { icon: ach.icon, name: ach.name, xp: ach.xp });
+            updateQuestProgress('unlock_achievement', 1);
+          }, i * 400);
+        });
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // NOTIFICATIONS
+    // ═══════════════════════════════════════════════════════════════
+
+    function showNotification(message, type, achievementData) {
+      const existing = document.querySelector('.achievement-toast');
+      if (existing) existing.remove();
+
+      const toast = document.createElement('div');
+      toast.className = 'achievement-toast';
+
+      if (type === 'achievement' && achievementData) {
+        toast.innerHTML = `
+          <div class="toast-icon-box">${achievementData.icon}</div>
+          <div class="toast-content">
+            <div class="toast-header">ACHIEVEMENT UNLOCKED!</div>
+            <div class="toast-name">${achievementData.name}</div>
+            <div class="toast-xp">+${achievementData.xp} XP</div>
+          </div>`;
+        playAchievementSound();
+      } else {
+        toast.innerHTML = `<div class="toast-content"><div class="toast-name">${message}</div></div>`;
+      }
+
+      document.body.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 10);
+      setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 500); }, 3500);
+    }
+
+    function showXPGain(amount, reason) {
+      const settings = getSettings();
+      if (!settings.showXPPopups) return;
+      const el = document.createElement('div');
+      el.className = 'xp-gain-popup';
+      el.innerHTML = `<div class="xp-gain-icon">✨</div><div class="xp-gain-amount">+${amount} XP</div>${reason ? `<div class="xp-gain-reason">${reason}</div>` : ''}`;
+      document.body.appendChild(el);
+      setTimeout(() => el.classList.add('show'), 10);
+      setTimeout(() => { el.classList.remove('show'); setTimeout(() => el.remove(), 500); }, 2000);
+    }
+
+    function playAchievementSound() {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        [659, 784, 988].forEach((freq, i) => {
+          const o = ctx.createOscillator();
+          const g = ctx.createGain();
+          o.connect(g); g.connect(ctx.destination);
+          o.frequency.value = freq;
+          o.type = 'sine';
+          g.gain.setValueAtTime(0.3, ctx.currentTime + i * 0.12);
+          g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + i * 0.12 + 0.3);
+          o.start(ctx.currentTime + i * 0.12);
+          o.stop(ctx.currentTime + i * 0.12 + 0.3);
+        });
+      } catch(e) {}
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // SETTINGS
+    // ═══════════════════════════════════════════════════════════════
+
+    function getSettings() {
+      try {
+        const s = localStorage.getItem('abgames_settings');
+        if (s) return JSON.parse(s);
+      } catch(e) {}
+      return { masterVolume: 100, soundEffects: true, backgroundMusic: true, reduceAnimations: false, showXPPopups: true, showHints: true, confirmExit: false };
+    }
+
+    function saveSettings(s) {
+      try { localStorage.setItem('abgames_settings', JSON.stringify(s)); } catch(e) {}
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // BACKGROUND MUSIC
+    // ═══════════════════════════════════════════════════════════════
+
+    let musicCtx = null, musicPlaying = false, musicInterval = null;
+
+    function startMusic() {
+      if (musicPlaying) return;
+      try {
+        if (!musicCtx) musicCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (musicCtx.state === 'suspended') musicCtx.resume();
+        musicPlaying = true;
+        scheduleMusicLoop();
+      } catch(e) { console.error('Music error:', e); }
+    }
+
+    function stopMusic() {
+      musicPlaying = false;
+      if (musicInterval) { clearTimeout(musicInterval); musicInterval = null; }
+    }
+
+    function playNote(freq, startTime, duration, volume = 0.06) {
+      if (!musicCtx) return;
+      try {
+        const o = musicCtx.createOscillator();
+        const g = musicCtx.createGain();
+        o.connect(g); g.connect(musicCtx.destination);
+        o.frequency.value = freq;
+        o.type = 'sine';
+        g.gain.setValueAtTime(0, startTime);
+        g.gain.linearRampToValueAtTime(volume, startTime + 0.05);
+        g.gain.linearRampToValueAtTime(volume * 0.6, startTime + duration * 0.7);
+        g.gain.linearRampToValueAtTime(0, startTime + duration);
+        o.start(startTime);
+        o.stop(startTime + duration + 0.05);
+      } catch(e) {}
+    }
+
+    function scheduleMusicLoop() {
+      if (!musicPlaying || !musicCtx) return;
+
+      const t = musicCtx.currentTime + 0.05;
+
+      // Ambient pad - slow sustained chords
+      function pad(freq, start, dur, vol) {
+        vol = vol || 0.03;
+        try {
+          const o = musicCtx.createOscillator();
+          const g = musicCtx.createGain();
+          const f = musicCtx.createBiquadFilter();
+          f.type = 'lowpass'; f.frequency.value = 800;
+          o.type = 'sine'; o.frequency.value = freq;
+          o.connect(f); f.connect(g); g.connect(musicCtx.destination);
+          g.gain.setValueAtTime(0, t + start);
+          g.gain.linearRampToValueAtTime(vol, t + start + 1.5);
+          g.gain.setValueAtTime(vol, t + start + dur - 1.5);
+          g.gain.linearRampToValueAtTime(0, t + start + dur);
+          o.start(t + start); o.stop(t + start + dur + 0.1);
+        } catch(e) {}
+      }
+
+      // Soft floating melody
+      function mel(freq, start, dur) {
+        try {
+          const o = musicCtx.createOscillator();
+          const g = musicCtx.createGain();
+          o.type = 'sine'; o.frequency.value = freq;
+          o.connect(g); g.connect(musicCtx.destination);
+          g.gain.setValueAtTime(0, t + start);
+          g.gain.linearRampToValueAtTime(0.045, t + start + 0.08);
+          g.gain.linearRampToValueAtTime(0.02, t + start + dur - 0.1);
+          g.gain.linearRampToValueAtTime(0, t + start + dur);
+          o.start(t + start); o.stop(t + start + dur + 0.1);
+        } catch(e) {}
+      }
+
+      // Sub bass drone
+      function drn(freq, start, dur) {
+        try {
+          const o = musicCtx.createOscillator();
+          const g = musicCtx.createGain();
+          const f = musicCtx.createBiquadFilter();
+          f.type = 'lowpass'; f.frequency.value = 200;
+          o.type = 'sine'; o.frequency.value = freq;
+          o.connect(f); f.connect(g); g.connect(musicCtx.destination);
+          g.gain.setValueAtTime(0, t + start);
+          g.gain.linearRampToValueAtTime(0.035, t + start + 2);
+          g.gain.setValueAtTime(0.035, t + start + dur - 2);
+          g.gain.linearRampToValueAtTime(0, t + start + dur);
+          o.start(t + start); o.stop(t + start + dur + 0.1);
+        } catch(e) {}
+      }
+
+      // 32s loop: Cmaj7 -> Am7 -> Fmaj7 -> G7sus4
+      drn(65.4, 0, 8);  pad(130.8,0,8); pad(164.8,0,8); pad(196.0,0,8); pad(246.9,0,8);
+      drn(55.0, 8, 8);  pad(110.0,8,8); pad(130.8,8,8); pad(164.8,8,8); pad(196.0,8,8);
+      drn(87.3,16, 8);  pad(174.6,16,8);pad(110.0,16,8);pad(130.8,16,8);pad(164.8,16,8);
+      drn(98.0,24, 8);  pad(196.0,24,8);pad(130.8,24,8);pad(146.8,24,8);pad(174.6,24,8);
+
+      // Floating melody
+      [[523.3,0,1.8],[587.3,2.5,1.8],[659.3,5,2.5],
+       [587.3,8,1.8],[523.3,10.5,1.8],[493.9,13,2.5],
+       [440.0,16,1.8],[493.9,18.5,1.8],[523.3,21,2.5],
+       [587.3,24,1.8],[659.3,26.5,1.8],[587.3,29,2.5]
+      ].forEach(function(n) { mel(n[0], n[1], n[2]); });
+
+      musicInterval = setTimeout(function() {
+        if (musicPlaying) scheduleMusicLoop();
+      }, 31800);
+    }
+
+    // Mute button - fix to use inner spans not textContent
+    let muted = false;
+    const muteBtn = document.getElementById('muteBtn');
+    const muteIcon = document.getElementById('muteIcon');
+    const muteLabel = document.getElementById('muteLabel');
+    if (muteBtn) {
+      muteBtn.addEventListener('click', () => {
+        muted = !muted;
+        if (muteIcon) muteIcon.textContent = muted ? '🔇' : '🔊';
+        if (muteLabel) muteLabel.textContent = muted ? 'Music Off' : 'Music On';
+        if (muted) stopMusic(); else startMusic();
+      });
+    }
+
+    // Header volume button
+    const masterVolumeBtn = document.getElementById('masterVolumeBtn');
+    const volumeIcon = document.getElementById('volumeIcon');
+    let masterVolume = true;
+    if (masterVolumeBtn) {
+      masterVolumeBtn.addEventListener('click', () => {
+        masterVolume = !masterVolume;
+        if (volumeIcon) volumeIcon.textContent = masterVolume ? '🔊' : '🔇';
+        if (masterVolume) { muted = false; if (muteIcon) muteIcon.textContent = '🔊'; if (muteLabel) muteLabel.textContent = 'Music On'; startMusic(); }
+        else { muted = true; if (muteIcon) muteIcon.textContent = '🔇'; if (muteLabel) muteLabel.textContent = 'Music Off'; stopMusic(); }
+      });
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // GAME TRACKING
+    // ═══════════════════════════════════════════════════════════════
+
+    function trackGameLaunch(gameName) {
+      const profile = loadProfile();
+      const normalized = gameName.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9]/g, '');
+      if (!profile.gameStats[normalized]) profile.gameStats[normalized] = { played: 0, lastPlayed: null };
+      profile.gameStats[normalized].played++;
+      profile.gameStats[normalized].lastPlayed = new Date().toISOString();
+      profile.totalGamesPlayed++;
+      const xpGain = 10;
+      profile.totalXP = (profile.totalXP || 0) + xpGain;
+      saveProfile(profile);
+      setTimeout(() => showXPGain(xpGain, 'Game played'), 500);
+      checkAchievements();
+      updateQuestProgress('play_5_rounds', 1);
+      trackQuestActions();
+      updateRecentlyPlayed();
+    }
+
+    document.querySelectorAll('.game-card a.play-btn').forEach(link => {
+      link.addEventListener('click', function() {
+        const card = this.closest('.game-card');
+        if (card) trackGameLaunch(card.getAttribute('data-game-name') || '');
+      });
+    });
+
+    // ═══════════════════════════════════════════════════════════════
+    // DAILY QUESTS
+    // ═══════════════════════════════════════════════════════════════
+
+    const DAILY_QUESTS = [
+      { id: 'play_3_games', name: 'Variety Player', desc: 'Play 3 different games today', hint: 'Try Blackjack, Roulette, or 2048!', xp: 50, requirement: 3 },
+      { id: 'earn_100_xp', name: 'XP Grinder', desc: 'Earn 100 XP in total today', hint: 'Play games (+10 XP each) or complete quests', xp: 75, requirement: 100 },
+      { id: 'play_5_rounds', name: 'Marathon Runner', desc: 'Play any 5 games today', hint: 'Same game multiple times counts!', xp: 60, requirement: 5 },
+      { id: 'unlock_achievement', name: 'Achievement Hunter', desc: 'Unlock any achievement', hint: 'Check Achievements (A key) for ideas', xp: 100, requirement: 1 }
+    ];
+
+    function getDailyQuests() {
+      try {
+        const saved = localStorage.getItem('abgames_daily_quests');
+        if (saved) {
+          const data = JSON.parse(saved);
+          if (data.date === new Date().toDateString()) return data.quests;
+        }
+      } catch(e) {}
+      return initializeDailyQuests();
+    }
+
+    function initializeDailyQuests() {
+      const quests = DAILY_QUESTS.map(q => ({ ...q, progress: 0, completed: false }));
+      localStorage.setItem('abgames_daily_quests', JSON.stringify({ date: new Date().toDateString(), quests }));
+      return quests;
+    }
+
+    function updateQuestProgress(questId, increment = 1) {
+      try {
+        const saved = localStorage.getItem('abgames_daily_quests');
+        if (!saved) { initializeDailyQuests(); return; }
+        const data = JSON.parse(saved);
+        const quest = data.quests.find(q => q.id === questId);
+        if (!quest || quest.completed) return;
+        if (questId === 'earn_100_xp') {
+          quest.progress = Math.min(parseInt(localStorage.getItem('abgames_daily_xp_earned') || '0'), quest.requirement);
+        } else {
+          quest.progress = Math.min(quest.progress + increment, quest.requirement);
+        }
+        if (quest.progress >= quest.requirement) {
+          quest.completed = true;
+          const profile = loadProfile();
+          profile.totalXP = (profile.totalXP || 0) + quest.xp;
+          saveProfile(profile);
+          showNotification('', 'achievement', { icon: '🎯', name: quest.name + ' Complete!', xp: quest.xp });
+          showXPGain(quest.xp, quest.name);
+        }
+        localStorage.setItem('abgames_daily_quests', JSON.stringify(data));
+        updateDailyQuestsDisplay();
+      } catch(e) {}
+    }
+
+    function updateDailyQuestsDisplay() {
+      const container = document.getElementById('dailyQuestsContainer');
+      const countEl = document.getElementById('questsCompletedCount');
+      if (!container) return;
+      const quests = getDailyQuests();
+      const done = quests.filter(q => q.completed).length;
+      if (countEl) countEl.textContent = `${done}/${quests.length}`;
+      container.innerHTML = quests.map(q => {
+        const pct = Math.min(100, (q.progress / q.requirement) * 100);
+        return `<div class="quest-card ${q.completed ? 'completed' : ''}">
+          <div class="quest-header">
+            <div class="quest-icon">${q.completed ? '✅' : '🎯'}</div>
+            <div class="quest-info">
+              <div class="quest-name">${q.name}</div>
+              <div class="quest-desc">${q.desc}</div>
+              ${!q.completed && q.hint ? `<div class="quest-hint">💡 ${q.hint}</div>` : ''}
+            </div>
+            <div class="quest-reward">+${q.xp} XP</div>
+          </div>
+          <div class="quest-progress-bar">
+            <div class="quest-progress-fill" style="width:${pct}%"></div>
+            <div class="quest-progress-text">${q.progress} / ${q.requirement}</div>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    function trackQuestActions() {
+      const profile = loadProfile();
+      const today = new Date().toDateString();
+      const uniqueToday = new Set(
+        Object.entries(profile.gameStats || {})
+          .filter(([, s]) => s.lastPlayed && new Date(s.lastPlayed).toDateString() === today)
+          .map(([k]) => k)
+      );
+      const saved = localStorage.getItem('abgames_daily_quests');
+      if (!saved) return;
+      const data = JSON.parse(saved);
+      const q = data.quests.find(q => q.id === 'play_3_games');
+      if (q && !q.completed) {
+        q.progress = Math.min(uniqueToday.size, q.requirement);
+        if (q.progress >= q.requirement) {
+          q.completed = true;
+          const profile2 = loadProfile();
+          profile2.totalXP = (profile2.totalXP || 0) + q.xp;
+          saveProfile(profile2);
+          showNotification('', 'achievement', { icon: '🎯', name: 'Variety Player Complete!', xp: q.xp });
+        }
+        localStorage.setItem('abgames_daily_quests', JSON.stringify(data));
+      }
+      updateDailyQuestsDisplay();
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // RECENTLY PLAYED
+    // ═══════════════════════════════════════════════════════════════
+
+    const GAME_META = {
+      blackjack: { name: 'Blackjack', icon: '🃏', file: 'blackjack.html' },
+      roulette: { name: 'Roulette', icon: '🎰', file: 'roulette.html' },
+      reactiontester: { name: 'Reaction Tester', icon: '⚡', file: 'reaction-tester.html' },
+      '2048puzzle': { name: '2048 Puzzle', icon: '🔢', file: '2048.html' },
+      theadventuresofjerib: { name: 'Adventures Of Jerib', icon: '🎮', file: 'platformer.html' },
+      eaglercraft: { name: 'Eaglercraft', icon: '⛏️', file: 'eaglercraft.html' },
+      snake: { name: 'Snake', icon: '🐍', file: 'snake.html' },
+      fruitslicer: { name: 'Fruit Slicer', icon: '🔪', file: 'fruit_slicer.html' }
+    };
+
+    function getTimeAgo(date) {
+      const s = Math.floor((new Date() - date) / 1000);
+      if (s < 60) return 'just now';
+      if (s < 3600) return `${Math.floor(s/60)}m ago`;
+      if (s < 86400) return `${Math.floor(s/3600)}h ago`;
+      return `${Math.floor(s/86400)}d ago`;
+    }
+
+    function updateRecentlyPlayed() {
+      const section = document.getElementById('recentlyPlayedSection');
+      const grid = document.getElementById('recentlyPlayedGrid');
+      if (!section || !grid) return;
+      const profile = loadProfile();
+      const recent = Object.entries(profile.gameStats || {})
+        .filter(([, s]) => s.lastPlayed)
+        .sort((a, b) => new Date(b[1].lastPlayed) - new Date(a[1].lastPlayed))
+        .slice(0, 3);
+      if (recent.length === 0) { section.style.display = 'none'; return; }
+      section.style.display = 'block';
+      grid.innerHTML = recent.map(([id, stats]) => {
+        const g = GAME_META[id]; if (!g) return '';
+        return `<div class="recent-game-card" onclick="window.location.href='${g.file}'">
+          <div class="recent-game-icon">${g.icon}</div>
+          <div class="recent-game-info">
+            <div class="recent-game-name">${g.name}</div>
+            <div class="recent-game-time">Played ${getTimeAgo(new Date(stats.lastPlayed))}</div>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // PROFILE DISPLAY
+    // ═══════════════════════════════════════════════════════════════
+
+    function updateProfileDisplay() {
+      const profile = loadProfile();
+      const levelInfo = calculateLevel(profile.totalXP || 0);
+
+      const usernameEl = document.getElementById('modalUsername');
+      if (usernameEl) usernameEl.textContent = profile.username || 'Player';
+
+      const currentDisplay = document.getElementById('currentUsernameDisplay');
+      if (currentDisplay) currentDisplay.textContent = profile.username || 'Player';
+
+      const headerUsername = document.getElementById('headerUsername');
+      if (headerUsername) headerUsername.textContent = profile.username || 'Player';
+
+      const levelEl = document.getElementById('profileLevel');
+      if (levelEl) levelEl.textContent = `Level ${levelInfo.level} • Member since ${new Date(profile.createdAt).toLocaleDateString()}`;
+
+      const xpFill = document.getElementById('xpBarFill');
+      if (xpFill) xpFill.style.width = `${(levelInfo.currentXP / levelInfo.xpForNextLevel) * 100}%`;
+
+      const xpText = document.getElementById('xpBarText');
+      if (xpText) xpText.textContent = `${levelInfo.currentXP.toLocaleString()} / ${levelInfo.xpForNextLevel.toLocaleString()} XP`;
+
+      const xpPct = document.getElementById('xpPercentage');
+      if (xpPct) xpPct.textContent = `${Math.floor((levelInfo.currentXP / levelInfo.xpForNextLevel) * 100)}% to next level`;
+
+      const totalPlayed = document.getElementById('totalGamesPlayed');
+      if (totalPlayed) totalPlayed.textContent = profile.totalGamesPlayed || 0;
+
+      const playtime = document.getElementById('totalPlaytime');
+      if (playtime) {
+        const mins = profile.totalPlaytimeMinutes || 0;
+        playtime.textContent = mins >= 60 ? `${Math.floor(mins/60)}h ${mins%60}m` : `${mins}m`;
+      }
+
+      const favEl = document.getElementById('favoriteGame');
+      if (favEl) {
+        const stats = profile.gameStats || {};
+        const gameNames = { blackjack: 'Blackjack', roulette: 'Roulette', reactiontester: 'Reaction', '2048puzzle': '2048', theadventuresofjerib: 'Jerib', eaglercraft: 'Eaglercraft', snake: 'Snake', fruitslicer: 'Fruit Slicer' };
+        const fav = Object.entries(stats).sort((a,b) => b[1].played - a[1].played)[0];
+        favEl.textContent = fav ? (gameNames[fav[0]] || fav[0]) : 'None';
+      }
+
+      // Most played list
+      const mpEl = document.getElementById('mostPlayedGames');
+      if (mpEl) {
+        const stats = profile.gameStats || {};
+        const gameNames = { blackjack: 'Blackjack', roulette: 'Roulette', reactiontester: 'Reaction Tester', '2048puzzle': '2048 Puzzle', theadventuresofjerib: 'Jerib', eaglercraft: 'Eaglercraft', snake: 'Snake', fruitslicer: 'Fruit Slicer' };
+        const sorted = Object.entries(stats).sort((a,b) => b[1].played - a[1].played).slice(0,4);
+        mpEl.innerHTML = sorted.length ? sorted.map(([id, s]) => `<div class="poe-game-item">${gameNames[id] || id} — ${s.played} plays</div>`).join('') : '<div class="poe-game-item">No games played yet</div>';
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // ACHIEVEMENTS DISPLAY
+    // ═══════════════════════════════════════════════════════════════
+
+    function updateAchievementsDisplay() {
+      const profile = loadProfile();
+      const grid = document.getElementById('achievementGrid');
+      if (!grid) return;
+
+      const activeTab = document.querySelector('.poe-category.active');
+      const activeCategory = activeTab ? activeTab.getAttribute('data-category') : 'all';
+      const searchInput = document.getElementById('achievementSearch');
+      const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+
+      const filtered = ACHIEVEMENTS.filter(a => {
+        const matchCat = activeCategory === 'all' || a.category === activeCategory;
+        const matchSearch = !searchTerm || a.name.toLowerCase().includes(searchTerm) || a.desc.toLowerCase().includes(searchTerm);
+        return matchCat && matchSearch;
+      });
+
+      const categories = ['all','general','blackjack','roulette','reaction','2048','platformer'];
+      const catMap = { all: 'progressAll', general: 'progressGeneral', blackjack: 'progressBlackjack', roulette: 'progressRoulette', reaction: 'progressReaction', '2048': 'progress2048', platformer: 'progressPlatformer' };
+      categories.forEach(cat => {
+        const el = document.getElementById(catMap[cat]);
+        if (!el) return;
+        const catAchs = cat === 'all' ? ACHIEVEMENTS : ACHIEVEMENTS.filter(a => a.category === cat);
+        const unlocked = catAchs.filter(a => profile.achievements.find(u => u.id === a.id)).length;
+        el.textContent = `${unlocked}/${catAchs.length}`;
+      });
+
+      grid.innerHTML = filtered.map(ach => {
+        const unlocked = profile.achievements.find(u => u.id === ach.id);
+        return `<div class="poe-ach-card ${unlocked ? 'unlocked' : 'locked'}">
+          <div class="poe-ach-icon-box">${ach.icon}</div>
+          <div class="poe-ach-details">
+            <div class="poe-ach-name">${ach.name}</div>
+            <div class="poe-ach-desc">${ach.desc}</div>
+          </div>
+          <div class="poe-ach-xp">+${ach.xp} XP</div>
+        </div>`;
+      }).join('');
+
+      document.querySelectorAll('.poe-category').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.poe-category').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const catNameEl = document.getElementById('currentCategoryName');
+          if (catNameEl) catNameEl.textContent = btn.textContent.trim();
+          updateAchievementsDisplay();
+        });
+      });
+
+      const searchEl = document.getElementById('achievementSearch');
+      if (searchEl) searchEl.oninput = updateAchievementsDisplay;
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // AVATAR
+    // ═══════════════════════════════════════════════════════════════
+
+    function updateAvatarDisplay(base64) {
+      const img = document.getElementById('profileAvatarImg');
+      const emoji = document.getElementById('profileAvatarEmoji');
+      const hImg = document.getElementById('headerAvatarImg');
+      const hEmoji = document.getElementById('headerAvatarEmoji');
+      if (img && emoji) { img.src = base64 || ''; img.style.display = base64 ? 'block' : 'none'; emoji.style.display = base64 ? 'none' : 'block'; }
+      if (hImg && hEmoji) { hImg.src = base64 || ''; hImg.style.display = base64 ? 'block' : 'none'; hEmoji.style.display = base64 ? 'none' : 'block'; }
+    }
+
+    const uploadAvatarBtn = document.getElementById('uploadAvatarBtn');
+    const avatarFileInput = document.getElementById('avatarFileInput');
+    if (uploadAvatarBtn && avatarFileInput) {
+      uploadAvatarBtn.addEventListener('click', () => avatarFileInput.click());
+      avatarFileInput.addEventListener('change', e => {
+        const file = e.target.files[0];
+        if (!file || !file.type.startsWith('image/')) return;
+        if (file.size > 2 * 1024 * 1024) { alert('Image too large! Max 2MB.'); return; }
+        const reader = new FileReader();
+        reader.onload = ev => {
+          const profile = loadProfile();
+          profile.avatar = ev.target.result;
+          saveProfile(profile);
+          updateAvatarDisplay(ev.target.result);
+          showNotification('✅ Profile picture updated!', 'success');
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // MODAL BUTTONS
+    // ═══════════════════════════════════════════════════════════════
+
+    // Profile
+    const profileBtn = document.getElementById('profileBtn');
+    if (profileBtn) {
+      profileBtn.addEventListener('click', () => {
+        updateProfileDisplay();
+        updateAvatarDisplay(loadProfile().avatar);
+        updateDailyQuestsDisplay();
+        document.getElementById('profileModal').classList.add('open');
+      });
+    }
+
+    const closeProfile = document.getElementById('closeProfile');
+    if (closeProfile) closeProfile.addEventListener('click', () => document.getElementById('profileModal').classList.remove('open'));
+
+    const profileModal = document.getElementById('profileModal');
+    if (profileModal) profileModal.addEventListener('click', e => { if (e.target === profileModal) profileModal.classList.remove('open'); });
+
+    // Save username
+    const saveUsernameBtn = document.getElementById('saveUsernameBtn');
+    if (saveUsernameBtn) {
+      saveUsernameBtn.addEventListener('click', () => {
+        const input = document.getElementById('usernameInput');
+        if (!input || !input.value.trim()) return;
+        const profile = loadProfile();
+        profile.username = input.value.trim().slice(0,20);
+        saveProfile(profile);
+        updateProfileDisplay();
+        checkAchievements();
+        showNotification('✅ Username saved!', 'success');
+        input.value = '';
+      });
+    }
+
+    // Export
+    const exportBtn = document.getElementById('exportBtn');
+    if (exportBtn) {
+      exportBtn.addEventListener('click', () => {
+        const data = JSON.stringify(loadProfile(), null, 2);
+        const blob = new Blob([data], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'abgames-profile.json';
+        a.click();
+      });
+    }
+
+    // Import
+    const importBtn = document.getElementById('importBtn');
+    const importFileInput = document.getElementById('importFileInput');
+    if (importBtn && importFileInput) {
+      importBtn.addEventListener('click', () => importFileInput.click());
+      importFileInput.addEventListener('change', e => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = ev => {
+          try {
+            const imported = JSON.parse(ev.target.result);
+            if (!imported.username || !imported.createdAt) throw new Error('Invalid profile');
+            if (!imported.avatar) imported.avatar = null;
+            saveProfile({ ...loadProfile(), ...imported });
+            updateProfileDisplay();
+            updateAvatarDisplay(imported.avatar);
+            showNotification('✅ Profile imported!', 'success');
+          } catch(err) { alert('Invalid profile file!'); }
+        };
+        reader.readAsText(file);
+      });
+    }
+
+    // Achievements
+    const achievementsBtn = document.getElementById('achievementsBtn');
+    if (achievementsBtn) {
+      achievementsBtn.addEventListener('click', () => {
+        updateAchievementsDisplay();
+        document.getElementById('achievementsModal').classList.add('open');
+      });
+    }
+
+    const closeAchievements = document.getElementById('closeAchievements');
+    if (closeAchievements) closeAchievements.addEventListener('click', () => document.getElementById('achievementsModal').classList.remove('open'));
+
+    const achievementsModal = document.getElementById('achievementsModal');
+    if (achievementsModal) achievementsModal.addEventListener('click', e => { if (e.target === achievementsModal) achievementsModal.classList.remove('open'); });
+
+    // How To
+    const btnHowTo = document.getElementById('btnHowTo');
+    if (btnHowTo) btnHowTo.addEventListener('click', () => document.getElementById('howToModal').classList.add('open'));
+
+    const closeHowTo = document.getElementById('closeHowTo');
+    if (closeHowTo) closeHowTo.addEventListener('click', () => document.getElementById('howToModal').classList.remove('open'));
+
+    // Credits
+    const btnCredits = document.getElementById('btnCredits');
+    if (btnCredits) btnCredits.addEventListener('click', () => document.getElementById('creditsModal').classList.add('open'));
+
+    const closeCredits = document.getElementById('closeCredits');
+    if (closeCredits) closeCredits.addEventListener('click', () => document.getElementById('creditsModal').classList.remove('open'));
+
+    // Settings
+    const settingsBtn = document.getElementById('settingsBtn');
+    if (settingsBtn) {
+      settingsBtn.addEventListener('click', () => {
+        const settings = getSettings();
+        const volSlider = document.getElementById('masterVolumeSlider');
+        const volValue = document.getElementById('masterVolumeValue');
+        if (volSlider) { volSlider.value = settings.masterVolume; }
+        if (volValue) { volValue.textContent = settings.masterVolume + '%'; }
+        const toggles = [
+          { id: 'soundEffectsToggle', key: 'soundEffects' },
+          { id: 'backgroundMusicToggle', key: 'backgroundMusic' },
+          { id: 'reduceAnimationsToggle', key: 'reduceAnimations' },
+          { id: 'showXPPopupsToggle', key: 'showXPPopups' },
+          { id: 'showHintsToggle', key: 'showHints' },
+          { id: 'confirmExitToggle', key: 'confirmExit' }
+        ];
+        toggles.forEach(({ id, key }) => {
+          const el = document.getElementById(id);
+          if (el) {
+            el.checked = settings[key];
+            el.onchange = ev => { settings[key] = ev.target.checked; saveSettings(settings); if (key === 'backgroundMusic') { ev.target.checked ? startMusic() : stopMusic(); } };
+          }
+        });
+        if (volSlider) volSlider.oninput = e => { settings.masterVolume = parseInt(e.target.value); if (volValue) volValue.textContent = e.target.value + '%'; saveSettings(settings); };
+        const storageEl = document.getElementById('storageUsed');
+        if (storageEl) {
+          let size = 0;
+          for (let k in localStorage) { if (localStorage.hasOwnProperty(k)) size += localStorage[k].length + k.length; }
+          storageEl.textContent = (size / 1024).toFixed(2) + ' KB';
+        }
+        document.getElementById('settingsModal').classList.add('open');
+      });
+    }
+
+    const closeSettings = document.getElementById('closeSettings');
+    if (closeSettings) closeSettings.addEventListener('click', () => document.getElementById('settingsModal').classList.remove('open'));
+
+    const settingsModal = document.getElementById('settingsModal');
+    if (settingsModal) settingsModal.addEventListener('click', e => { if (e.target === settingsModal) settingsModal.classList.remove('open'); });
+
+    // ═══════════════════════════════════════════════════════════════
+    // GAME TABS
+    // ═══════════════════════════════════════════════════════════════
+
+    function initGameTabs() {
+      const tabs = document.querySelectorAll('.game-tab');
+      const cards = document.querySelectorAll('.game-card');
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          const tabName = tab.getAttribute('data-tab');
+          cards.forEach(card => {
+            const name = card.getAttribute('data-game-name') || '';
+            if (tabName === 'all') card.style.display = 'block';
+            else if (tabName === 'coming') card.style.display = card.getAttribute('data-status') === 'coming' ? 'block' : 'none';
+            else card.style.display = name === tabName ? 'block' : 'none';
+          });
+        });
+      });
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // KEYBOARD SHORTCUTS
+    // ═══════════════════════════════════════════════════════════════
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+      if (!document.querySelector('.modal-overlay.open')) {
+        if (e.key === 'p' || e.key === 'P') { if (profileBtn) profileBtn.click(); }
+        if (e.key === 'a' || e.key === 'A') { if (achievementsBtn) achievementsBtn.click(); }
+      }
+    });
+
+    // ═══════════════════════════════════════════════════════════════
+    // INIT
+    // ═══════════════════════════════════════════════════════════════
+
+    updateProfileDisplay();
+    checkAchievements();
+    updateRecentlyPlayed();
+    initGameTabs();
+    updateAvatarDisplay(loadProfile().avatar);
+
+    // Start music on first click
+    document.addEventListener('click', function startMusicOnce() {
+      startMusic();
+      document.removeEventListener('click', startMusicOnce);
+    }, { once: true });
+
+  });
+  </script>
+</body>
+</html>
